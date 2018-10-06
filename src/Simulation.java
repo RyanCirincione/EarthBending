@@ -17,7 +17,7 @@ public class Simulation
 				{
 					rocks.remove(temp);
 				}
-				if()
+				temp.fly();
 		}
 	}
 	//types of rocks 0 = small boulder 1 = large boulder 

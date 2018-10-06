@@ -4,7 +4,8 @@ public class Rock {
 	double x;
 	double y;
 	boolean side;
-	double velocity;
+	double velocityY;
+	double velocityX;
 	boolean isActive;
 	int type;
 	final double GRAVITY = 10/60;
@@ -14,14 +15,18 @@ public class Rock {
 		y = sy;
 		side = sside;//0 left 1 right
 		isActive = true; 
-		velocity = -50/60;
+		velocityY = -50/60;
 		type =stype;
 	}
 	public void gravity ()
 	{
 		if(this.isActive)
-			this.y =  (this.velocity * 1/((480 - this.y)/100) + GRAVITY);//VALUSE WILL NEED TO CHANGE!
+			this.y =  (this.velocityY * 1/((480 - this.y)/100) + GRAVITY);//VALUSE WILL NEED TO CHANGE!
 		else
 			this.y =  (this.y + GRAVITY);
+	}
+	public void fly ()
+	{
+		this.x = this.x + velocityX;
 	}
 }
