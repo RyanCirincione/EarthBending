@@ -2,3 +2,4 @@ bin/
 settings/
 *.class
 *.jar
+.classpath
