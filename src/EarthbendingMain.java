@@ -44,6 +44,8 @@ public class EarthbendingMain extends JPanel {
 
 	private static final long serialVersionUID = 4486604239167882738L;
 	static final int STANDING_SPACE = 250, S_WIDTH = 640, S_HEIGHT = 510;
+	boolean w, a, s, d, left, right;
+	Simulation sim;
 	BufferedImage background;
 	FrameGrabber grabber;
 	OpenCVFrameConverter.ToIplImage converter;
@@ -51,6 +53,7 @@ public class EarthbendingMain extends JPanel {
 	int bgTimer, threshold, punchThreshold;
 
 	public EarthbendingMain() {
+		sim = new Simulation();
 		threshold = 100;
 		punchThreshold = 6000;
 		bgTimer = 0;
@@ -177,8 +180,7 @@ public class EarthbendingMain extends JPanel {
 				}
 			}
 
-			// TODO this was copied from andrews code in firebending:
-			// EarthbendingMain.paintFire(gr, vertices);
+			sim.simulate(gr, w, s, a, d, left, right);
 		}
 		final int CARTOON_EFFECT_SCALE = 64;
 		for (int x = 0; x < pixels.length; x++) {
