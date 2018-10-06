@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.sound.midi.Synthesizer;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -69,11 +70,36 @@ public class EarthbendingMain extends JPanel {
 
 		this.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-					threshold++;
+				switch(e.getKeyCode()) {
+				case KeyEvent.VK_W:
+					System.out.println("W");
+					break;
+				case KeyEvent.VK_A:
+					System.out.println("A");
+					break;
+				case KeyEvent.VK_S:
+					System.out.println("S");
+					break;
+				case KeyEvent.VK_D:
+					System.out.println("D");
+					break;
 				}
-				if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-					threshold--;
+			}
+
+			public void keyReleased(KeyEvent e) {
+				switch(e.getKeyCode()) {
+				case KeyEvent.VK_W:
+					System.out.println("!W");
+					break;
+				case KeyEvent.VK_A:
+					System.out.println("!A");
+					break;
+				case KeyEvent.VK_S:
+					System.out.println("!S");
+					break;
+				case KeyEvent.VK_D:
+					System.out.println("!D");
+					break;
 				}
 			}
 		});
@@ -197,14 +223,14 @@ public class EarthbendingMain extends JPanel {
 			//TODO this was copied from andrews code in firebending:
 			// EarthbendingMain.paintFire(gr, vertices);
 		}
-//		gr.setColor(Color.white);
-//		for (int x = 0; x < pixels.length; x++) {
-//			for (int y = 0; y < pixels[x].length; y++) {
-//				if (pixels[x][y]) {
-//					gr.fillRect(x, y, 1, 1);
-//				}
-//			}
-//		}
+		gr.setColor(Color.white);
+		for (int x = 0; x < pixels.length; x++) {
+			for (int y = 0; y < pixels[x].length; y++) {
+				if (pixels[x][y]) {
+					gr.fillRect(x, y, 1, 1);
+				}
+			}
+		}
 //
 //		gr.drawImage(image, 641, 0, null);
 //		gr.setColor(Color.white);
