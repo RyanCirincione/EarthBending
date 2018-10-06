@@ -26,7 +26,7 @@ import org.bytedeco.javacv.VideoInputFrameGrabber;
 
 public class EarthbendingMain extends JPanel {
 	public static void main(String[] args) {
-		JFrame frame = new JFrame("Firebending");
+		JFrame frame = new JFrame(":B:earthbending");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel panel = new EarthbendingMain();
