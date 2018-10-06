@@ -9,11 +9,9 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.sound.midi.Synthesizer;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -45,7 +43,6 @@ public class EarthbendingMain extends JPanel {
 	}
 
 	private static final long serialVersionUID = 4486604239167882738L;
-	ArrayList<Vector> vertices;
 	BufferedImage background;
 	FrameGrabber grabber;
 	OpenCVFrameConverter.ToIplImage converter;
@@ -54,10 +51,6 @@ public class EarthbendingMain extends JPanel {
 
 	public EarthbendingMain() {
 		threshold = 100;
-		vertices = new ArrayList<Vector>();
-		for (int i = 0; i < 90; i++) {
-			vertices.add(new Vector(0, 0));
-		}
 		bgTimer = 0;
 		background = null;
 		grabber = new VideoInputFrameGrabber(0);
@@ -169,7 +162,7 @@ public class EarthbendingMain extends JPanel {
 				}
 			}
 		}
-//
+
 //		gr.drawImage(image, 641, 0, null);
 //		gr.setColor(Color.white);
 //		for (int x = 0; x < pixels.length; x++) {
@@ -179,21 +172,7 @@ public class EarthbendingMain extends JPanel {
 //				}
 //			}
 //		}
-//
-//		for (int i = 0; i < vertices.size() - 1; i++) {
-//			gr.setColor(Color.cyan);
-//			gr.drawLine((int) vertices.get(i).x, (int) vertices.get(i).y, (int) vertices.get(i + 1).x,
-//					(int) vertices.get(i + 1).y);
-//			gr.drawLine(641 + (int) vertices.get(i).x, (int) vertices.get(i).y, 641 + (int) vertices.get(i + 1).x,
-//					(int) vertices.get(i + 1).y);
-//			
-//			gr.fillRect((int)(vertices.get(i).x-1), (int)(vertices.get(i).y-1), 3, 3);
-//
-//			if (vertices.get(i).x < 0.1 && vertices.get(i).y < 0.1) {
-//				break;
-//			}
-//		}
-		
+
 		gr.setColor(Color.white);
 		gr.fillRect(0, 485, 40, 20);
 		gr.setColor(Color.blue);
