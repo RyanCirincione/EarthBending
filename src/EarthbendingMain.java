@@ -43,15 +43,16 @@ public class EarthbendingMain extends JPanel {
 	}
 
 	private static final long serialVersionUID = 4486604239167882738L;
-	static final int STANDING_SPACE = 200, S_WIDTH = 640, S_HEIGHT = 510;
+	static final int STANDING_SPACE = 250, S_WIDTH = 640, S_HEIGHT = 510;
 	BufferedImage background;
 	FrameGrabber grabber;
 	OpenCVFrameConverter.ToIplImage converter;
 	IplImage img;
-	int bgTimer, threshold;
+	int bgTimer, threshold, punchThreshold;
 
 	public EarthbendingMain() {
 		threshold = 100;
+		punchThreshold = 6000;
 		bgTimer = 0;
 		background = null;
 		grabber = new VideoInputFrameGrabber(0);
@@ -76,6 +77,18 @@ public class EarthbendingMain extends JPanel {
 					break;
 				case KeyEvent.VK_D:
 					System.out.println("D");
+					break;
+				case KeyEvent.VK_LEFT:
+					threshold--;
+					break;
+				case KeyEvent.VK_RIGHT:
+					threshold++;
+					break;
+				case KeyEvent.VK_UP:
+					punchThreshold += 100;
+					break;
+				case KeyEvent.VK_DOWN:
+					punchThreshold -= 100;
 					break;
 				}
 			}
@@ -123,6 +136,8 @@ public class EarthbendingMain extends JPanel {
 		}
 
 		gr.drawImage(image, 0, 0, null);
+
+		int leftCount = 0, rightCount = 0;
 		boolean[][] pixels = new boolean[640][480], pixels2 = new boolean[640][480];
 		if (background != null) {
 			// Flag every pixel that is different enough from the background
@@ -132,8 +147,20 @@ public class EarthbendingMain extends JPanel {
 					if (Math.abs(((bgRGB >> 16) & 0xFF) - ((iRGB >> 16) & 0xFF)) + Math.abs(((bgRGB >> 8) & 0xFF) - ((iRGB >> 8) & 0xFF))
 							+ Math.abs((bgRGB & 0xFF) - (iRGB & 0xFF)) > threshold) {
 						pixels2[x][y] = true;
+						if (x < S_WIDTH / 2 - STANDING_SPACE / 2) {
+							leftCount++;
+						}
+						if (x > S_WIDTH / 2 + STANDING_SPACE / 2) {
+							rightCount++;
+						}
 					}
 				}
+			}
+			if (leftCount > punchThreshold) {
+				System.out.println("left");
+			}
+			if (rightCount > punchThreshold) {
+				System.out.println("\t\t\tright");
 			}
 
 			// Make pixels a copy of pixels2 that has all the falses spread by 1 pixel
@@ -153,12 +180,19 @@ public class EarthbendingMain extends JPanel {
 			// TODO this was copied from andrews code in firebending:
 			// EarthbendingMain.paintFire(gr, vertices);
 		}
-		gr.setColor(Color.white);
+		final int CARTOON_EFFECT_SCALE = 64;
 		for (int x = 0; x < pixels.length; x++) {
 			for (int y = 0; y < pixels[x].length; y++) {
-				if (pixels[x][y]) {
-					gr.fillRect(x, y, 1, 1);
-				}
+				int rgb = image.getRGB(x, y);
+				int r = (rgb >> 16) & 0xFF, g = (rgb >> 8) & 0xFF, b = rgb & 0xFF;
+				gr.setColor(new Color((r / CARTOON_EFFECT_SCALE) * CARTOON_EFFECT_SCALE + 24, (g / CARTOON_EFFECT_SCALE) * CARTOON_EFFECT_SCALE + 24,
+						(b / CARTOON_EFFECT_SCALE) * CARTOON_EFFECT_SCALE + 24));
+				gr.fillRect(x, y, 1, 1);
+
+				// if (pixels[x][y]) {
+				// gr.setColor(Color.white);
+				// gr.fillRect(x, y, 1, 1);
+				// }
 			}
 		}
 
@@ -173,13 +207,14 @@ public class EarthbendingMain extends JPanel {
 		// }
 
 		gr.setColor(Color.cyan);
-		gr.drawLine(WIDTH / 2 - STANDING_SPACE / 2, 0, WIDTH / 2 - STANDING_SPACE / 2, HEIGHT);
-		gr.drawLine(WIDTH / 2 + STANDING_SPACE / 2, 0, WIDTH / 2 + STANDING_SPACE / 2, HEIGHT);
+		gr.drawLine(S_WIDTH / 2 - STANDING_SPACE / 2, 0, S_WIDTH / 2 - STANDING_SPACE / 2, S_HEIGHT);
+		gr.drawLine(S_WIDTH / 2 + STANDING_SPACE / 2, 0, S_WIDTH / 2 + STANDING_SPACE / 2, S_HEIGHT);
 
 		gr.setColor(Color.white);
-		gr.fillRect(0, 485, 40, 20);
+		gr.fillRect(0, 485, 140, 20);
 		gr.setColor(Color.blue);
 		gr.drawString("" + threshold, 2, 500);
+		gr.drawString("" + punchThreshold, 82, 500);
 	}
 
 	public static BufferedImage deepCopy(BufferedImage bi) {
