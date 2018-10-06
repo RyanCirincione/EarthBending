@@ -9,16 +9,18 @@ public class Simulation
 	{
 		for(Rock temp : rocks)
 		{
-			if(temp.isActive == false)
-			{
-				temp.velocity = temp.velocity -1; //accelerates rock falling down
-				if(temp.y > 480)
+		
+				if(temp.type == 0 || temp.type == 1 ||temp.type == 2){
+					temp.gravity();
+				}
+				if(temp.x > 1000 || temp.x < -200 ||temp.y < -200)
 				{
 					rocks.remove(temp);
 				}
-			}
+				if()
 		}
 	}
+	//types of rocks 0 = small boulder 1 = large boulder 
 	public void createRock(boolean side)//0 is left 1 is right
 	{
 		for(Rock temp : rocks)
@@ -32,7 +34,7 @@ public class Simulation
 			}
 		}
 		int x = side? 420: 240;
-		Rock newRock = new Rock(x,0,side);
+		Rock newRock = new Rock(x,0,side,0);
 		rocks.add(newRock);
 	}
 }
