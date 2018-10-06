@@ -111,7 +111,6 @@ public class EarthbendingMain extends JPanel {
 
 	public void paintComponent(Graphics gr) {
 		BufferedImage image = null;
-		int sX = -1, sY = -1;
 		try {
 			Frame frame = grabber.grab();
 			img = converter.convert(frame);
@@ -159,67 +158,6 @@ public class EarthbendingMain extends JPanel {
 				}
 			}
 
-			// Read left to right, finding first true pixel
-			for (int y = 1; y < pixels[0].length - 1 && sX < 0; y++) {
-				for (int x = 1; x < pixels.length - 1 && sX < 0; x++) {
-					if (pixels[x][y]) {
-						sX = x;
-						sY = y;
-					}
-				}
-			}
-
-			if (sX > -1) {
-				int cX = sX, cY = sY;
-				int angle = 225;
-				int perimeter = 0, count = 0, i = 0;
-				// Count the perimeter of the desired blob
-				do {
-					int oldAngle = angle;
-					while (!pixels[(int) (cX + Math.signum((int) (Math.cos(Math.toRadians(angle)) * 2)))][(int) (cY
-							+ Math.signum((int) (Math.sin(Math.toRadians(angle)) * 2)))]) {
-						angle -= 45;
-						if (angle < 0) {
-							angle += 360;
-						}
-						if (angle == oldAngle) {
-							break;
-						}
-					}
-					if (angle == oldAngle) {
-						break;
-					}
-
-					cX += (int) Math.signum((int) (Math.cos(Math.toRadians(angle)) * 2));
-					cY += (int) Math.signum((int) (Math.sin(Math.toRadians(angle)) * 2));
-					angle = (angle + 135) % 360;
-
-					perimeter++;
-				} while (cX != sX || cY != sY);
-
-				// Place the vertices on the perimeter
-				if (perimeter >= vertices.size() + 1) {
-					do {
-						while (!pixels[(int) (cX + Math.signum((int) (Math.cos(Math.toRadians(angle)) * 2)))][(int) (cY
-								+ Math.signum((int) (Math.sin(Math.toRadians(angle)) * 2)))]) {
-							angle -= 45;
-							if (angle < 0) {
-								angle += 360;
-							}
-						}
-
-						cX += (int) Math.signum((int) (Math.cos(Math.toRadians(angle)) * 2));
-						cY += (int) Math.signum((int) (Math.sin(Math.toRadians(angle)) * 2));
-						angle = (angle + 135) % 360;
-
-						count++;
-						if (count % (int) Math.ceil((double) perimeter / vertices.size()) == 0) {
-//							vertices.get(i).update(cX, cY);
-							i++;
-						}
-					} while (cX != sX || cY != sY);
-				}
-			}
 			//TODO this was copied from andrews code in firebending:
 			// EarthbendingMain.paintFire(gr, vertices);
 		}
