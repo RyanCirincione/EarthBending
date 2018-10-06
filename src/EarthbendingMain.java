@@ -43,6 +43,7 @@ public class EarthbendingMain extends JPanel {
 	}
 
 	private static final long serialVersionUID = 4486604239167882738L;
+	static final int STANDING_SPACE = 200, S_WIDTH = 640, S_HEIGHT = 510;
 	BufferedImage background;
 	FrameGrabber grabber;
 	OpenCVFrameConverter.ToIplImage converter;
@@ -63,7 +64,7 @@ public class EarthbendingMain extends JPanel {
 
 		this.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
-				switch(e.getKeyCode()) {
+				switch (e.getKeyCode()) {
 				case KeyEvent.VK_W:
 					System.out.println("W");
 					break;
@@ -80,7 +81,7 @@ public class EarthbendingMain extends JPanel {
 			}
 
 			public void keyReleased(KeyEvent e) {
-				switch(e.getKeyCode()) {
+				switch (e.getKeyCode()) {
 				case KeyEvent.VK_W:
 					System.out.println("!W");
 					break;
@@ -99,7 +100,7 @@ public class EarthbendingMain extends JPanel {
 		this.setFocusable(true);
 		this.requestFocus();
 
-		this.setPreferredSize(new Dimension(640, 510));
+		this.setPreferredSize(new Dimension(S_WIDTH, S_HEIGHT));
 	}
 
 	public void paintComponent(Graphics gr) {
@@ -128,8 +129,7 @@ public class EarthbendingMain extends JPanel {
 			for (int x = 0; x < image.getWidth(); x++) {
 				for (int y = 0; y < image.getHeight(); y++) {
 					int bgRGB = background.getRGB(x, y), iRGB = image.getRGB(x, y);
-					if (Math.abs(((bgRGB >> 16) & 0xFF) - ((iRGB >> 16) & 0xFF))
-							+ Math.abs(((bgRGB >> 8) & 0xFF) - ((iRGB >> 8) & 0xFF))
+					if (Math.abs(((bgRGB >> 16) & 0xFF) - ((iRGB >> 16) & 0xFF)) + Math.abs(((bgRGB >> 8) & 0xFF) - ((iRGB >> 8) & 0xFF))
 							+ Math.abs((bgRGB & 0xFF) - (iRGB & 0xFF)) > threshold) {
 						pixels2[x][y] = true;
 					}
@@ -142,8 +142,7 @@ public class EarthbendingMain extends JPanel {
 					pixels[x][y] = pixels2[x][y];
 					for (int dx = -1; dx <= 1 && pixels2[x][y]; dx++) {
 						for (int dy = -1; dy <= 1 && pixels2[x][y]; dy++) {
-							if (x + dx < 0 || y + dy < 0 || x + dx >= pixels2.length || y + dy >= pixels2[x + dx].length
-									|| !pixels2[x + dx][y + dy]) {
+							if (x + dx < 0 || y + dy < 0 || x + dx >= pixels2.length || y + dy >= pixels2[x + dx].length || !pixels2[x + dx][y + dy]) {
 								pixels[x][y] = false;
 							}
 						}
@@ -151,7 +150,7 @@ public class EarthbendingMain extends JPanel {
 				}
 			}
 
-			//TODO this was copied from andrews code in firebending:
+			// TODO this was copied from andrews code in firebending:
 			// EarthbendingMain.paintFire(gr, vertices);
 		}
 		gr.setColor(Color.white);
@@ -163,15 +162,19 @@ public class EarthbendingMain extends JPanel {
 			}
 		}
 
-//		gr.drawImage(image, 641, 0, null);
-//		gr.setColor(Color.white);
-//		for (int x = 0; x < pixels.length; x++) {
-//			for (int y = 0; y < pixels[x].length; y++) {
-//				if (pixels2[x][y]) {
-//					gr.fillRect(641 + x, y, 1, 1);
-//				}
-//			}
-//		}
+		// gr.drawImage(image, 641, 0, null);
+		// gr.setColor(Color.white);
+		// for (int x = 0; x < pixels.length; x++) {
+		// for (int y = 0; y < pixels[x].length; y++) {
+		// if (pixels2[x][y]) {
+		// gr.fillRect(641 + x, y, 1, 1);
+		// }
+		// }
+		// }
+
+		gr.setColor(Color.cyan);
+		gr.drawLine(WIDTH / 2 - STANDING_SPACE / 2, 0, WIDTH / 2 - STANDING_SPACE / 2, HEIGHT);
+		gr.drawLine(WIDTH / 2 + STANDING_SPACE / 2, 0, WIDTH / 2 + STANDING_SPACE / 2, HEIGHT);
 
 		gr.setColor(Color.white);
 		gr.fillRect(0, 485, 40, 20);
@@ -192,7 +195,7 @@ public class EarthbendingMain extends JPanel {
 	 * @param src
 	 *            IplImage to convert
 	 * @return Converted BufferedImage
-	 */ 
+	 */
 	public static BufferedImage IplImageToBufferedImage(IplImage src) {
 		OpenCVFrameConverter.ToIplImage grabberConverter = new OpenCVFrameConverter.ToIplImage();
 		Java2DFrameConverter paintConverter = new Java2DFrameConverter();
