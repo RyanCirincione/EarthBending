@@ -68,7 +68,7 @@ public class Rock {
 	}
 
 	public void grow() {
-		if (y > (480 - height)) {
+		if (y > (570 - height)) {
 			y += -2400 / 60;
 		}
 	}
