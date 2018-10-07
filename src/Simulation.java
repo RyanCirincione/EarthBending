@@ -82,7 +82,7 @@ public class Simulation {
 		{
 			if(rocks.get(i).side == side&&rocks.get(i).type!= Rock.Type.FRAGMENT)
 			{
-				for(int j = 0;j < rocks.get(i).height*rocks.get(i).width/100;j++)
+				for(int j = 0;j < rocks.get(i).height*rocks.get(i).width/400;j++)
 					
 				{
 					Rock newRock = new Rock(rocks.get(i).x,rocks.get(i).y,rocks.get(i).side,Rock.Type.FRAGMENT,rocks.get(i).height/1.5,rocks.get(i).width/1.5);
