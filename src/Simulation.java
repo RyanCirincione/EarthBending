@@ -42,7 +42,7 @@ public class Simulation {
 	}
 
 	// types of rocks 0 = small boulder 1 = large boulder
-	public void createBoulder(boolean side, double height,double width)// 0 is left 1 is right
+	public void createBoulder(boolean side, double height,double width,double x)// 0 is left 1 is right
 	{
 		for (Rock temp : rocks) {
 			if (temp.side == side) {
@@ -51,14 +51,12 @@ public class Simulation {
 				}
 			}
 		}
-		int x = side ? 420 : 240;
 		Rock newRock = new Rock(x, 440, side, Rock.Type.BOULDER, height,width);
 		rocks.add(newRock);
 		//System.out.println(rocks.size());
 	}
 
-	public void createPillar(boolean side, double height,double width) {
-		double x = side ? 420 : 240;
+	public void createPillar(boolean side, double height,double width,double x) {
 		Rock newRock = new Rock(x, 480, side, Rock.Type.PILLAR, height,width);
 		rocks.add(newRock);
 	}
