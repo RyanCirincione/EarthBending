@@ -9,6 +9,7 @@ public class Simulation {
 
 	public void simulate(Graphics gr, boolean up, boolean down, boolean left, boolean right, boolean pleft,
 			boolean pright) {
+		System.out.println(rocks.size());
 		for (Rock temp : rocks) {
 
 			if (temp.type == Rock.Type.BOULDER) {
