@@ -8,19 +8,20 @@ public class Simulation {
 
 	public void simulate(Graphics gr, boolean up, boolean down, boolean left, boolean right, boolean pleft, boolean pright) {
 		System.out.println(rocks.size());
-		for (Rock temp : rocks) {
+		for (int i = 0; i < rocks.size();i++) {
 
-			if (temp.type == Rock.Type.BOULDER) {
-				temp.gravity();
+			if (rocks.get(i).type == Rock.Type.BOULDER) {
+				rocks.get(i).gravity();
 			}
-			if (temp.type == Rock.Type.PILLAR) {
-				temp.decayTimer();
+			if (rocks.get(i).type == Rock.Type.PILLAR) {
+				rocks.get(i).decayTimer();
 			}
-			if (temp.x > 800 || temp.x < -200 || temp.y > 480) {
-				rocks.remove(temp);
+			if (rocks.get(i).x > 800 || rocks.get(i).x < -200 || rocks.get(i).y > 480) {
+				rocks.remove(rocks.get(i));
+				i--;
 			}
-			temp.fly();
-			switch (temp.type) {
+			rocks.get(i).fly();
+			switch (rocks.get(i).type) {
 			case BOULDER: {
 				gr.setColor(Color.getHSBColor(222, 184, 135));
 				break;
@@ -36,8 +37,8 @@ public class Simulation {
 			default:
 				break;
 			}
-			System.out.println(temp.x + " " + temp.y + " " + temp.size + " " + temp.isActive);
-			gr.fillRect((int) temp.x, (int) temp.y, (int) temp.size, (int) temp.size);
+			System.out.println(rocks.get(i).x + " " + rocks.get(i).y + " " + rocks.get(i).size + " " + rocks.get(i).isActive);
+			gr.fillRect((int) rocks.get(i).x, (int) rocks.get(i).y, (int) rocks.get(i).size, (int) rocks.get(i).size);
 		}
 
 	}
@@ -83,17 +84,21 @@ public class Simulation {
 	}
 	public void scatterShot(boolean side)//SIMPLE GEOMETRY
 	{
-		for(Rock temp:rocks)
+		int counter = rocks.size();
+		for(int i = 0; i<counter;i++ )
 		{
-			if(temp.side == side)
+			if(rocks.get(i).side == side)
 			{
-				for(int i = 0;i < temp.size/100;i++)
+				for(int j = 0;j < rocks.get(i).size/100;j++)
 				{
-					Rock newRock = new Rock(temp.x,temp.y,temp.side,temp.type,temp.size);
-					newRock.velocityX = side? -50/60.0:50/60.0;
+					Rock newRock = new Rock(rocks.get(i).x,rocks.get(i).y,rocks.get(i).side,Rock.Type.FRAGMENT,rocks.get(i).size);
+					newRock.velocityX = side? 50/60.0:-50/60.0;
 					newRock.velocityY = (Math.random()*2-1);
 					rocks.add(newRock);
 				}
+				rocks.remove(rocks.get(i));
+				i--;
+				counter--;
 			}
 		}
 		
