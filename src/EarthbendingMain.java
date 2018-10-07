@@ -135,6 +135,20 @@ public class EarthbendingMain extends JPanel {
 				case KeyEvent.VK_DOWN:
 					punchThreshold -= 100;
 					break;
+				case KeyEvent.VK_SPACE:
+					try {
+						BufferedImage image;
+						Frame frame = grabber.grab();
+						img = converter.convert(frame);
+						// the grabbed frame will be flipped, re-flip to make it right
+						cvFlip(img, img, 1);// l-r = 90_degrees_steps_anti_clockwise
+
+						image = IplImageToBufferedImage(img);
+						background = deepCopy(image);
+					} catch (org.bytedeco.javacv.FrameGrabber.Exception err) {
+						err.printStackTrace();
+					}
+					break;
 				}
 			}
 
