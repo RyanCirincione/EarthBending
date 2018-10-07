@@ -174,18 +174,28 @@ public class EarthbendingMain extends JPanel {
 				}
 			}
 			if (leftCount > punchThreshold) {
-				System.out.println("left");
-				if(w && s) {
-					sim.scatterShot(false);
+				if(!left) {
+					System.out.println("left");
+					if(w && s) {
+						sim.scatterShot(false);
+					}
+					sim.punch(false);
 				}
-				sim.punch(false);
+				left = true;
+			} else {
+				left = false;
 			}
 			if (rightCount > punchThreshold) {
-				System.out.println("\t\t\tright");
-				if(w && s) {
-					sim.scatterShot(true);
+				if(!right) {
+					System.out.println("\t\t\tright");
+					if(w && s) {
+						sim.scatterShot(true);
+					}
+					sim.punch(true);
 				}
-				sim.punch(true);
+				right = true;
+			} else {
+				right = false;
 			}
 
 			// Make pixels a copy of pixels2 that has all the falses spread by 1 pixel
