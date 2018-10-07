@@ -1,3 +1,4 @@
+import java.awt.image.BufferedImage;
 
 public class Rock {
 
@@ -11,6 +12,7 @@ public class Rock {
 	double width;
 	Type type;
 	int lifeTimer;
+	BufferedImage image;
 
 	public static enum Type {
 		BOULDER, PILLAR, FRAGMENT;
@@ -19,7 +21,7 @@ public class Rock {
 
 	final double GRAVITY = (2.0 * ((this.y) + 240)) / 10.0;
 
-	public Rock(double sx, double sy, boolean sside, Type temp, double sheight,double swidth) {
+	public Rock(double sx, double sy, boolean sside, Type temp, double sheight,double swidth,BufferedImage image) {
 		x = sx;
 		y = sy;
 		side = sside;// 0 left 1 right
@@ -29,6 +31,7 @@ public class Rock {
 		lifeTimer = 600;
 		height = sheight;
 		width = swidth;
+		this.image = image;
 	}
 
 	public void gravity() {
