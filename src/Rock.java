@@ -3,6 +3,7 @@ public class Rock {
 
 	double x;
 	double y;
+	double size;
 	boolean side;
 	double velocityY;
 	double velocityX;
@@ -14,7 +15,7 @@ public class Rock {
 		
 	}
 	final double GRAVITY = 10/60;
-	public Rock (int sx, int sy, boolean sside, Type temp)
+	public Rock (int sx, int sy, boolean sside, Type temp, double ssize)
 	{
 		x = sx;
 		y = sy;
@@ -23,6 +24,7 @@ public class Rock {
 		velocityY = -50/60;
 		type = temp;
 		lifeTimer = 600;
+		size = ssize;
 	}
 	public void gravity ()
 	{
