@@ -62,7 +62,16 @@ public class Simulation {
 		for (Rock temp : rocks) {
 			if (temp.side == side) {
 				if (temp.side) {
-					temp.velocityX = 3000 / 60.0;// temp number for test reasons
+					
+					if(temp.type == Rock.Type.FRAGMENT)
+					{
+						temp.velocityX = Math.random()*20 +50;
+						temp.velocityX = side? temp.velocityX : temp.velocityX*-1;
+					}
+					else
+					{
+						temp.velocityX = 3000 / 60.0;// temp number for test reasons
+					}
 				} else {
 					temp.velocityX = -3000 / 60.0;// temp number for test reasons
 				}
