@@ -42,6 +42,7 @@ public class Rock {
 	}
 
 	public void fly() {
+		System.out.println(velocityX);
 		this.x = this.x + velocityX;
 	}
 

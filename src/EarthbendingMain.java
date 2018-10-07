@@ -175,9 +175,11 @@ public class EarthbendingMain extends JPanel {
 			}
 			if (leftCount > punchThreshold) {
 				System.out.println("left");
+				sim.punch(false);
 			}
 			if (rightCount > punchThreshold) {
 				System.out.println("\t\t\tright");
+				sim.punch(true);
 			}
 
 			// Make pixels a copy of pixels2 that has all the falses spread by 1 pixel
