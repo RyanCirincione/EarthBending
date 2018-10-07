@@ -18,7 +18,7 @@ public class Rock {
 
 	final double GRAVITY = 10.0 / 60.0;
 
-	public Rock(int sx, int sy, boolean sside, Type temp, double ssize) {
+	public Rock(double sx, double sy, boolean sside, Type temp, double ssize) {
 		x = sx;
 		y = sy;
 		side = sside;// 0 left 1 right
