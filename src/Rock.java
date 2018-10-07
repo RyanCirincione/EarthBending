@@ -16,14 +16,14 @@ public class Rock {
 
 	}
 
-	final double GRAVITY = ((2.5 * this.y) + 240) / 10.0;
+	final double GRAVITY = (2.0 * ((this.y) + 240)) / 10.0;
 
 	public Rock(double sx, double sy, boolean sside, Type temp, double ssize) {
 		x = sx;
 		y = sy;
 		side = sside;// 0 left 1 right
 		isActive = true;
-		velocityY = -40 / 60.0;
+		velocityY = -500.0 / 60.0;
 		type = temp;
 		lifeTimer = 600;
 		size = ssize;
@@ -31,12 +31,12 @@ public class Rock {
 
 	public void gravity() {
 		if (this.isActive) {
-			this.velocityY += GRAVITY - ((2.5 * this.y) - 240) / 10.0;// VALUSE WILL NEED TO CHANGE!
-			if(this.y > 205) {
+			this.velocityY -= (1.3 * ((this.y) - 240)) / 10.0;// VALUSE WILL NEED TO CHANGE!
+			if(this.y > 270) {
 				this.velocityY = this.velocityY/1.3;
 			}
-			if(this.y < 150) {
-				this.velocityY = this.velocityY/1.25;
+			if(this.y < 210) {
+				this.velocityY = this.velocityY/1.15;
 			}
 		} else {
 			this.y = (this.y + GRAVITY);
