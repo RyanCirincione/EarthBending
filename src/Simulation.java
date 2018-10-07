@@ -29,9 +29,7 @@ public class Simulation {
 	}
 
 	public void simulate(Graphics gr, boolean up, boolean down, boolean left, boolean right, boolean pleft, boolean pright) {
-		//System.out.println(rocks.size());
-		for (int i = 0; i < rocks.size();i++) {
-
+		for (int i = 0; i < rocks.size(); i++) {
 			if (rocks.get(i).type == Rock.Type.BOULDER) {
 				rocks.get(i).gravity();
 			}
@@ -44,15 +42,13 @@ public class Simulation {
 				continue;
 			}
 			rocks.get(i).fly();
-			
-			System.out.println(rocks.get(i).x + " " + rocks.get(i).y + " " + rocks.get(i).height + " " + rocks.get(i).isActive);
+
 			gr.drawImage(rocks.get(i).image, (int) (rocks.get(i).x),  (int)(rocks.get(i).y),  (int)(rocks.get(i).width), (int)(rocks.get(i).height), null);
 		}
-
 	}
 
 	// types of rocks 0 = small boulder 1 = large boulder
-	public void createBoulder(boolean side, double height,double width,double x)// 0 is left 1 is right
+	public void createBoulder(boolean side, double height, double width, double x)// 0 is left 1 is right
 	{
 		for (Rock temp : rocks) {
 			if (temp.side == side) {
@@ -63,7 +59,6 @@ public class Simulation {
 		}
 		Rock newRock = new Rock(x, 440, side, Rock.Type.BOULDER, height,width,rockImage[(int)(Math.random() * rockImage.length)]);
 		rocks.add(newRock);
-		//System.out.println(rocks.size());
 	}
 
 	public void createPillar(boolean side, double height,double width,double x) {
@@ -76,10 +71,12 @@ public class Simulation {
 		for (Rock temp : rocks) {
 			if (temp.side == side) {
 				if (temp.side) {
-					temp.velocityX = -3000.0/60.0;
-					if(isShattered == true) {
-						temp.velocityX = (Math.random()*20)+50;// temp number for test reasons
-						isShattered = false;
+
+					if (temp.type == Rock.Type.FRAGMENT) {
+						temp.velocityX = Math.random() * 20 + 50;
+						temp.velocityX = side ? temp.velocityX : temp.velocityX * -1;
+					} else {
+						temp.velocityX = 3000 / 60.0;// temp number for test reasons
 					}
 				} else {
 					temp.velocityX = -(Math.random()*20)-50;// temp number for test reasons
@@ -91,17 +88,14 @@ public class Simulation {
 	public void scatterShot(boolean side)// SIMPLE GEOMETRY
 	{
 		int counter = rocks.size();
-		for(int i = 0; i<counter;i++ )
-		{
-			if(rocks.get(i).side == side&&rocks.get(i).type!= Rock.Type.FRAGMENT)
-			{
-				for(int j = 0;j < rocks.get(i).height*rocks.get(i).width/400;j++)
-					
-				{
-					Rock newRock = new Rock(rocks.get(i).x,rocks.get(i).y,rocks.get(i).side,Rock.Type.FRAGMENT,rocks.get(i).height/1.5,rocks.get(i).width/1.5,rockImage[(int)(Math.random() * rockImage.length)]);
-					newRock.velocityX = side? ((Math.random()*100)-50)*Math.random()*100:-((Math.random()*100)-50)*Math.random()*100;
-//					newRock.velocityX = newRock.velocityX + ((Math.random()*20)+40);
-					newRock.velocityY = ((Math.random()*100)-50);
+		for (int i = 0; i < counter; i++) {
+			if (rocks.get(i).side == side && rocks.get(i).type != Rock.Type.FRAGMENT) {
+				for (int j = 0; j < rocks.get(i).height * rocks.get(i).width / 400; j++) {
+					Rock newRock = new Rock(rocks.get(i).x + Math.random() * (rocks.get(i).width - 15), rocks.get(i).y + Math.random() * (rocks.get(i).width - 15),
+							rocks.get(i).side, Rock.Type.FRAGMENT, 15, 15, rockImage[(int)(Math.random() * rockImage.length)]);
+					newRock.velocityX = side ? 50 / 60.0 : -50 / 60.0;
+					newRock.velocityX = newRock.velocityX + ((Math.random() * 20) + 40) / 60;
+					newRock.velocityY = ((Math.random() * 100) - 50);
 
 					rocks.add(newRock);
 				}
@@ -110,6 +104,48 @@ public class Simulation {
 				counter--;
 			}
 		}
+	}
 
+	public void createTripleBoulder(boolean side, double height, double width, double x)// 0 is left 1 is right
+	{
+		ArrayList<Rock> flip = new ArrayList<Rock>();
+		int toggle = side?40:-60;
+		for(int i = 0; i < 3; i++)
+		{
+			Rock newRock = new Rock(x+(toggle*i), 440, side, Rock.Type.BOULDER, height+(40*i),width+(40*i),(40*i));//change last value for initial velocity
+			flip.add(newRock);
+		}
+		for(int i = 0; i < flip.size(); i++)
+		{
+			if(side)
+			{
+				rocks.add(flip.get(i));
+			}
+			else
+			{
+				rocks.add(flip.get(flip.size()-i-1));
+			}
+		}
+	}
+	public void createTriplePillar(boolean side, double height,double width,double x)// 0 is left 1 is right
+	{
+		ArrayList<Rock> flip = new ArrayList<Rock>();
+		int toggle = side?40:-60;
+		for(int i = 0; i < 3; i++)
+		{
+			Rock newRock = new Rock(x+(toggle*i), 440, side, Rock.Type.PILLAR, height+(40*i),width+(40*i),(40*i));//change last value for initial velocity
+			flip.add(newRock);
+		}
+		for(int i = 0; i < flip.size(); i++)
+		{
+			if(side)
+			{
+				rocks.add(flip.get(i));
+			}
+			else
+			{
+				rocks.add(flip.get(flip.size()-i-1));
+			}
+		}
 	}
 }

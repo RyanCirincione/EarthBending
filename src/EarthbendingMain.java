@@ -72,16 +72,20 @@ public class EarthbendingMain extends JPanel {
 			public void keyPressed(KeyEvent e) {
 				switch (e.getKeyCode()) {
 				case KeyEvent.VK_W:
-				//	screenShake += 14;
+					screenShake += 14;
 					pillarUpgrade = true;
 					w = true;
 					break;
 				case KeyEvent.VK_A:
 					if (pillarUpgrade) {
-						sim.createPillar(false, 350, 70, S_WIDTH / 2 - STANDING_SPACE / 2 - 50);
+						sim.createPillar(false, 350, 70, S_WIDTH / 2 - STANDING_SPACE / 2 - 85);
 						pillarUpgrade = false;
 					} else {
-						sim.createBoulder(false, d ? 90 : 70, d ? 90 : 70, S_WIDTH / 2 - STANDING_SPACE / 2 - 50);
+						if (s) {
+							sim.createTripleBoulder(false, 70, 70, S_WIDTH / 2 - STANDING_SPACE / 2 - 85);
+						} else {
+							sim.createBoulder(false, d ? 90 : 70, d ? 90 : 70, S_WIDTH / 2 - STANDING_SPACE / 2 - 85);
+						}
 					}
 					screenShake += 4;
 					a = true;
@@ -92,9 +96,14 @@ public class EarthbendingMain extends JPanel {
 					break;
 				case KeyEvent.VK_D:
 					if (pillarUpgrade) {
-						sim.createPillar(true, 350, 70, S_WIDTH / 2 + STANDING_SPACE / 2 + 50);
+						sim.createPillar(true, 350, 70, S_WIDTH / 2 + STANDING_SPACE / 2 + 25);
+						pillarUpgrade = false;
 					} else {
-						sim.createBoulder(true, a ? 90 : 70, a ? 90 : 70, S_WIDTH / 2 + STANDING_SPACE / 2 + 50);
+						if(s) {
+							sim.createTripleBoulder(true, 70, 70, S_WIDTH / 2 + STANDING_SPACE / 2 + 25);
+						} else {
+							sim.createBoulder(true, a ? 90 : 70, a ? 90 : 70, S_WIDTH / 2 + STANDING_SPACE / 2 + 25);
+						}
 					}
 					screenShake += 4;
 					d = true;
@@ -140,6 +149,9 @@ public class EarthbendingMain extends JPanel {
 	public void paintComponent(Graphics gr) {
 		int ssX = (int) (Math.random() * screenShake * 2) - screenShake, ssY = (int) (Math.random() * screenShake * 2) - screenShake;
 		if (screenShake > 0) {
+			if (screenShake > 30) {
+				screenShake = 30;
+			}
 			screenShake -= 2;
 		}
 		gr.setColor(Color.lightGray);
@@ -186,7 +198,6 @@ public class EarthbendingMain extends JPanel {
 			}
 			if (leftCount > punchThreshold) {
 				if (!left) {
-					System.out.println("left");
 					if (w && s) {
 						sim.scatterShot(false);
 					}
@@ -198,7 +209,6 @@ public class EarthbendingMain extends JPanel {
 			}
 			if (rightCount > punchThreshold) {
 				if (!right) {
-					System.out.println("\t\t\tright");
 					if (w && s) {
 						sim.scatterShot(true);
 					}
@@ -223,7 +233,7 @@ public class EarthbendingMain extends JPanel {
 				}
 			}
 		}
-		final int CARTOON_EFFECT_SCALE = 64;
+		final int CARTOON_EFFECT_SCALE = 32;
 		for (int x = 0; x < pixels.length; x++) {
 			for (int y = 0; y < pixels[x].length; y++) {
 				int rgb = image.getRGB(x, y);
