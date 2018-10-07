@@ -3,11 +3,12 @@ public class Rock {
 
 	double x;
 	double y;
-	double size;
 	boolean side;
 	double velocityY;
 	double velocityX;
 	boolean isActive;
+	double height;
+	double width;
 	Type type;
 	int lifeTimer;
 
@@ -18,7 +19,7 @@ public class Rock {
 
 	final double GRAVITY = (2.0 * ((this.y) + 240)) / 10.0;
 
-	public Rock(double sx, double sy, boolean sside, Type temp, double ssize) {
+	public Rock(double sx, double sy, boolean sside, Type temp, double sheight,double swidth) {
 		x = sx;
 		y = sy;
 		side = sside;// 0 left 1 right
@@ -26,7 +27,8 @@ public class Rock {
 		velocityY = -100.0 / 60.0;
 		type = temp;
 		lifeTimer = 600;
-		size = ssize;
+		height = sheight;
+		width = swidth;
 	}
 
 	public void gravity() {
@@ -47,10 +49,21 @@ public class Rock {
 		}
 		this.y += velocityY;
 	}
-
+	public void grow()
+	{
+		if(y > (480-height))
+		{
+			y += velocityY;
+		}
+		y = velocityY;
+	}
 	public void fly() {
-		System.out.println(velocityX);
+		System.out.println("TEST ME BOPI"+velocityX);
 		this.x = this.x + velocityX;
+		if(type == Rock.Type.FRAGMENT)
+		{
+			y = y + velocityY;
+		}
 	}
 
 	public void decayTimer() {
