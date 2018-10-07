@@ -75,6 +75,7 @@ public class EarthbendingMain extends JPanel {
 					w = true;
 					break;
 				case KeyEvent.VK_A:
+					sim.createBoulder(false, 50);
 					screenShake += 4;
 					a = true;
 					break;
@@ -83,6 +84,7 @@ public class EarthbendingMain extends JPanel {
 					s = true;
 					break;
 				case KeyEvent.VK_D:
+					sim.createBoulder(true, 50);
 					screenShake += 4;
 					d = true;
 					break;
@@ -191,8 +193,6 @@ public class EarthbendingMain extends JPanel {
 					}
 				}
 			}
-
-			sim.simulate(gr, w, s, a, d, left, right);
 		}
 		final int CARTOON_EFFECT_SCALE = 64;
 		for (int x = 0; x < pixels.length; x++) {
@@ -203,10 +203,10 @@ public class EarthbendingMain extends JPanel {
 						(b / CARTOON_EFFECT_SCALE) * CARTOON_EFFECT_SCALE + 24));
 				gr.fillRect(x, y, 1, 1);
 
-				// if (pixels[x][y]) {
-				// gr.setColor(Color.white);
-				// gr.fillRect(x, y, 1, 1);
-				// }
+				if (pixels[x][y]) {
+					gr.setColor(Color.white);
+					gr.fillRect(x, y, 1, 1);
+				}
 			}
 		}
 
@@ -220,6 +220,8 @@ public class EarthbendingMain extends JPanel {
 		// }
 		// }
 
+		sim.simulate(gr, w, s, a, d, left, right);
+		
 		gr.setColor(Color.cyan);
 		gr.drawLine(S_WIDTH / 2 - STANDING_SPACE / 2, 0, S_WIDTH / 2 - STANDING_SPACE / 2, S_HEIGHT);
 		gr.drawLine(S_WIDTH / 2 + STANDING_SPACE / 2, 0, S_WIDTH / 2 + STANDING_SPACE / 2, S_HEIGHT);
