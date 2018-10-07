@@ -50,10 +50,11 @@ public class EarthbendingMain extends JPanel {
 	FrameGrabber grabber;
 	OpenCVFrameConverter.ToIplImage converter;
 	IplImage img;
-	int bgTimer, threshold, punchThreshold;
+	int bgTimer, threshold, punchThreshold, screenShake;
 
 	public EarthbendingMain() {
 		sim = new Simulation();
+		screenShake = 0;
 		threshold = 100;
 		punchThreshold = 6000;
 		bgTimer = 0;
@@ -70,16 +71,20 @@ public class EarthbendingMain extends JPanel {
 			public void keyPressed(KeyEvent e) {
 				switch (e.getKeyCode()) {
 				case KeyEvent.VK_W:
-					System.out.println("W");
+					screenShake += 14;
+					w = true;
 					break;
 				case KeyEvent.VK_A:
-					System.out.println("A");
+					screenShake += 4;
+					a = true;
 					break;
 				case KeyEvent.VK_S:
-					System.out.println("S");
+					screenShake += 6;
+					s = true;
 					break;
 				case KeyEvent.VK_D:
-					System.out.println("D");
+					screenShake += 4;
+					d = true;
 					break;
 				case KeyEvent.VK_LEFT:
 					threshold--;
@@ -99,16 +104,16 @@ public class EarthbendingMain extends JPanel {
 			public void keyReleased(KeyEvent e) {
 				switch (e.getKeyCode()) {
 				case KeyEvent.VK_W:
-					System.out.println("!W");
+					w = false;
 					break;
 				case KeyEvent.VK_A:
-					System.out.println("!A");
+					a = false;
 					break;
 				case KeyEvent.VK_S:
-					System.out.println("!S");
+					s = false;
 					break;
 				case KeyEvent.VK_D:
-					System.out.println("!D");
+					d = false;
 					break;
 				}
 			}
@@ -120,6 +125,13 @@ public class EarthbendingMain extends JPanel {
 	}
 
 	public void paintComponent(Graphics gr) {
+		int ssX = (int) (Math.random() * screenShake * 2) - screenShake, ssY = (int) (Math.random() * screenShake * 2) - screenShake;
+		if (screenShake > 0) {
+			screenShake -= 2;
+		}
+		gr.setColor(Color.lightGray);
+		gr.fillRect(0, 0, S_WIDTH, S_HEIGHT);
+		gr.translate(ssX, ssY);
 		BufferedImage image = null;
 		try {
 			Frame frame = grabber.grab();
@@ -211,6 +223,7 @@ public class EarthbendingMain extends JPanel {
 		gr.setColor(Color.cyan);
 		gr.drawLine(S_WIDTH / 2 - STANDING_SPACE / 2, 0, S_WIDTH / 2 - STANDING_SPACE / 2, S_HEIGHT);
 		gr.drawLine(S_WIDTH / 2 + STANDING_SPACE / 2, 0, S_WIDTH / 2 + STANDING_SPACE / 2, S_HEIGHT);
+		gr.translate(-ssX, -ssY);
 
 		gr.setColor(Color.white);
 		gr.fillRect(0, 485, 140, 20);
