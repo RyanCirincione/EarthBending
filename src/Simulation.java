@@ -1,10 +1,23 @@
-import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 public class Simulation {
 	int pixels[][] = new int[640][480];
 	ArrayList<Rock> rocks = new ArrayList<Rock>();
+	BufferedImage rockImage;
+
+	public Simulation() {
+		try {
+			rockImage = ImageIO.read(new File("res/rock1.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void simulate(Graphics gr, boolean up, boolean down, boolean left, boolean right, boolean pleft, boolean pright) {
 		//System.out.println(rocks.size());
@@ -22,26 +35,8 @@ public class Simulation {
 				continue;
 			}
 			rocks.get(i).fly();
-			switch (rocks.get(i).type) {
-			case BOULDER: {
-				gr.setColor(Color.getHSBColor(222, 184, 135));
-				break;
-			}
-			case PILLAR: {
-				gr.setColor(Color.BLACK);
-				break;
-			}
-			case FRAGMENT: {
-				gr.setColor(Color.GRAY);
-				break;
-			}
-			default:
-				break;
-			}
-			//System.out.println(rocks.get(i).x + " " + rocks.get(i).y + " " + rocks.get(i).size + " " + rocks.get(i).isActive);
-			gr.fillRect((int) rocks.get(i).x, (int) rocks.get(i).y, (int) rocks.get(i).height, (int) rocks.get(i).width);
-			System.out.println(rocks.size()+"\n");
-			System.out.println(rocks.get(0).x);
+			System.out.println(rocks.get(i).x + " " + rocks.get(i).y + " " + rocks.get(i).height + " " + rocks.get(i).isActive);
+			gr.drawImage(rockImage, (int) (rocks.get(i).x),  (int)(rocks.get(i).y), (int)(rocks.get(i).height),  (int)(rocks.get(i).width), null);
 		}
 
 	}
@@ -68,24 +63,20 @@ public class Simulation {
 		rocks.add(newRock);
 	}
 
-	
-	public void punch (boolean side)//0 left 1 right
+	public void punch(boolean side)// 0 left 1 right
 	{
 		for (Rock temp : rocks) {
-			if(temp.side == side)
-			{
-				if(temp.side)
-				{
-					temp.velocityX = 2000/60.0;//temp number for test reasons
-				}
-				else
-				{
-					temp.velocityX = -2000/60.0;//temp number for test reasons
+			if (temp.side == side) {
+				if (temp.side) {
+					temp.velocityX = 3000 / 60.0;// temp number for test reasons
+				} else {
+					temp.velocityX = -3000 / 60.0;// temp number for test reasons
 				}
 			}
 		}
 	}
-	public void scatterShot(boolean side)//SIMPLE GEOMETRY
+
+	public void scatterShot(boolean side)// SIMPLE GEOMETRY
 	{
 		int counter = rocks.size();
 		for(int i = 0; i<counter;i++ )
@@ -99,6 +90,7 @@ public class Simulation {
 					newRock.velocityX = side? 50/60.0:-50/60.0;
 					newRock.velocityX = newRock.velocityX + ((Math.random()*20)+40)/60;
 					newRock.velocityY = ((Math.random()*100)-50);
+
 					rocks.add(newRock);
 				}
 				rocks.remove(rocks.get(i));
@@ -106,6 +98,6 @@ public class Simulation {
 				counter--;
 			}
 		}
-		
+
 	}
 }

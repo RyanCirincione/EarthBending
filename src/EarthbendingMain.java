@@ -75,7 +75,7 @@ public class EarthbendingMain extends JPanel {
 					w = true;
 					break;
 				case KeyEvent.VK_A:
-					sim.createBoulder(false, 50);
+					sim.createBoulder(false, 70);
 					screenShake += 4;
 					a = true;
 					break;
@@ -84,7 +84,7 @@ public class EarthbendingMain extends JPanel {
 					s = true;
 					break;
 				case KeyEvent.VK_D:
-					sim.createBoulder(true, 50);
+					sim.createBoulder(true, 70);
 					screenShake += 4;
 					d = true;
 					break;
@@ -174,18 +174,28 @@ public class EarthbendingMain extends JPanel {
 				}
 			}
 			if (leftCount > punchThreshold) {
-				System.out.println("left");
-				if(w && s) {
-					sim.scatterShot(false);
+				if(!left) {
+					System.out.println("left");
+					if(w && s) {
+						sim.scatterShot(false);
+					}
+					sim.punch(false);
 				}
-				sim.punch(false);
+				left = true;
+			} else {
+				left = false;
 			}
 			if (rightCount > punchThreshold) {
-				System.out.println("\t\t\tright");
-				if(w && s) {
-					sim.scatterShot(true);
+				if(!right) {
+					System.out.println("\t\t\tright");
+					if(w && s) {
+						sim.scatterShot(true);
+					}
+					sim.punch(true);
 				}
-				sim.punch(true);
+				right = true;
+			} else {
+				right = false;
 			}
 
 			// Make pixels a copy of pixels2 that has all the falses spread by 1 pixel
