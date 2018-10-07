@@ -35,7 +35,7 @@ public class Rock {
 		isActive = true;
 		velocityY = -100.0 / 60.0 + svelocityY;
 		type = temp;
-		lifeTimer = 600;
+		lifeTimer = 90;
 		height = sheight;
 		width = swidth;
 	}
@@ -64,7 +64,7 @@ public class Rock {
 
 	public void grow() {
 		if (y > (480 - height)) {
-			y += -600 / 60;
+			y += -2400 / 60;
 		}
 	}
 
@@ -80,7 +80,7 @@ public class Rock {
 			lifeTimer--;
 			this.grow();
 		} else {
-			y = y + 25 / 60.0;
+			y = y + 750 / 60.0;
 		}
 	}
 }

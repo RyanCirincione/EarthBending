@@ -78,7 +78,11 @@ public class EarthbendingMain extends JPanel {
 					break;
 				case KeyEvent.VK_A:
 					if (pillarUpgrade) {
-						sim.createPillar(false, 350, 70, S_WIDTH / 2 - STANDING_SPACE / 2 - 85);
+						if (s) {
+							sim.createTriplePillar(false, 350, 70, S_WIDTH / 2 - STANDING_SPACE / 2 - 85);
+						} else {
+							sim.createPillar(false, 350, 70, S_WIDTH / 2 - STANDING_SPACE / 2 - 85);
+						}
 						pillarUpgrade = false;
 					} else {
 						if (s) {
@@ -96,10 +100,14 @@ public class EarthbendingMain extends JPanel {
 					break;
 				case KeyEvent.VK_D:
 					if (pillarUpgrade) {
-						sim.createPillar(true, 350, 70, S_WIDTH / 2 + STANDING_SPACE / 2 + 25);
+						if (s) {
+							sim.createTriplePillar(true, 350, 70, S_WIDTH / 2 + STANDING_SPACE / 2 + 25);
+						} else {
+							sim.createPillar(true, 350, 70, S_WIDTH / 2 + STANDING_SPACE / 2 + 25);
+						}
 						pillarUpgrade = false;
 					} else {
-						if(s) {
+						if (s) {
 							sim.createTripleBoulder(true, 70, 70, S_WIDTH / 2 + STANDING_SPACE / 2 + 25);
 						} else {
 							sim.createBoulder(true, a ? 90 : 70, a ? 90 : 70, S_WIDTH / 2 + STANDING_SPACE / 2 + 25);

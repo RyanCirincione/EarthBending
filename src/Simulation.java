@@ -62,7 +62,6 @@ public class Simulation {
 		for (Rock temp : rocks) {
 			if (temp.side == side) {
 				if (temp.side) {
-
 					if (temp.type == Rock.Type.FRAGMENT) {
 						temp.velocityX = Math.random() * 20 + 50;
 						temp.velocityX = side ? temp.velocityX : temp.velocityX * -1;
@@ -71,6 +70,10 @@ public class Simulation {
 					}
 				} else {
 					temp.velocityX = -3000 / 60.0;// temp number for test reasons
+				}
+
+				if (temp.type == Rock.Type.PILLAR) {
+					temp.velocityX = temp.side ? 1800 / 60.0 : -1800 / 60.0;
 				}
 			}
 		}
@@ -100,42 +103,33 @@ public class Simulation {
 	public void createTripleBoulder(boolean side, double height, double width, double x)// 0 is left 1 is right
 	{
 		ArrayList<Rock> flip = new ArrayList<Rock>();
-		int toggle = side?40:-60;
-		for(int i = 0; i < 3; i++)
-		{
-			Rock newRock = new Rock(x+(toggle*i), 440, side, Rock.Type.BOULDER, height+(40*i),width+(40*i),(40*i));//change last value for initial velocity
+		int toggle = side ? 40 : -60;
+		for (int i = 0; i < 3; i++) {
+			Rock newRock = new Rock(x + (toggle * i), 440, side, Rock.Type.BOULDER, height + (40 * i), width + (40 * i), (40 * i));// change last value for initial velocity
 			flip.add(newRock);
 		}
-		for(int i = 0; i < flip.size(); i++)
-		{
-			if(side)
-			{
+		for (int i = 0; i < flip.size(); i++) {
+			if (side) {
 				rocks.add(flip.get(i));
-			}
-			else
-			{
-				rocks.add(flip.get(flip.size()-i-1));
+			} else {
+				rocks.add(flip.get(flip.size() - i - 1));
 			}
 		}
 	}
-	public void createTriplePillar(boolean side, double height,double width,double x)// 0 is left 1 is right
+
+	public void createTriplePillar(boolean side, double height, double width, double x)// 0 is left 1 is right
 	{
 		ArrayList<Rock> flip = new ArrayList<Rock>();
-		int toggle = side?40:-60;
-		for(int i = 0; i < 3; i++)
-		{
-			Rock newRock = new Rock(x+(toggle*i), 440, side, Rock.Type.PILLAR, height+(40*i),width+(40*i),(40*i));//change last value for initial velocity
+		int toggle = side ? 40 : -60;
+		for (int i = 0; i < 3; i++) {
+			Rock newRock = new Rock(x + (toggle * i), 440, side, Rock.Type.PILLAR, height + (40 * i), width + (40 * i), (40 * i));// change last value for initial velocity
 			flip.add(newRock);
 		}
-		for(int i = 0; i < flip.size(); i++)
-		{
-			if(side)
-			{
+		for (int i = 0; i < flip.size(); i++) {
+			if (side) {
 				rocks.add(flip.get(i));
-			}
-			else
-			{
-				rocks.add(flip.get(flip.size()-i-1));
+			} else {
+				rocks.add(flip.get(flip.size() - i - 1));
 			}
 		}
 	}
