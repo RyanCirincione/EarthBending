@@ -74,11 +74,11 @@ public class Simulation {
 			{
 				if(temp.side)
 				{
-					temp.velocityX = 100/60.0;//temp number for test reasons
+					temp.velocityX = 2500/60.0;//temp number for test reasons
 				}
 				else
 				{
-					temp.velocityX = -1000/60.0;//temp number for test reasons
+					temp.velocityX = -2500/60.0;//temp number for test reasons
 				}
 			}
 		}
