@@ -33,7 +33,7 @@ public class Rock {
 		width = swidth;
 		this.image = image;
 	}
-	public Rock(double sx, double sy, boolean sside, Type temp, double sheight,double swidth,double svelocityY) {
+	public Rock(double sx, double sy, boolean sside, Type temp, double sheight,double swidth,double svelocityY,BufferedImage image) {
 		x = sx;
 		y = sy;
 		side = sside;// 0 left 1 right
@@ -43,6 +43,7 @@ public class Rock {
 		lifeTimer = 90;
 		height = sheight;
 		width = swidth;
+		this.image = image;
 	}
 	public void gravity() {
 		if (this.isActive) {

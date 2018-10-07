@@ -57,7 +57,7 @@ public class EarthbendingMain extends JPanel {
 		screenShake = 0;
 		pillarUpgrade = false;
 		threshold = 100;
-		punchThreshold = 6000;
+		punchThreshold = 8000;
 		bgTimer = 0;
 		background = null;
 		grabber = new VideoInputFrameGrabber(0);
