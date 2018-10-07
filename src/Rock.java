@@ -30,7 +30,17 @@ public class Rock {
 		height = sheight;
 		width = swidth;
 	}
-
+	public Rock(double sx, double sy, boolean sside, Type temp, double sheight,double swidth,double svelocityY) {
+		x = sx;
+		y = sy;
+		side = sside;// 0 left 1 right
+		isActive = true;
+		velocityY = -100.0 / 60.0 + svelocityY;
+		type = temp;
+		lifeTimer = 600;
+		height = sheight;
+		width = swidth;
+	}
 	public void gravity() {
 		if (this.isActive) {
 			this.velocityY -= (1.8 * ((this.y) - 240)) / 10.0;// VALUSE WILL NEED TO CHANGE!
