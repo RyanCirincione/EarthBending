@@ -44,7 +44,7 @@ public class EarthbendingMain extends JPanel {
 
 	private static final long serialVersionUID = 4486604239167882738L;
 	static final int STANDING_SPACE = 250, S_WIDTH = 640, S_HEIGHT = 510;
-	boolean w, a, s, d, left, right;
+	boolean w, a, s, d, left, right, pillarUpgrade;
 	Simulation sim;
 	BufferedImage background;
 	FrameGrabber grabber;
@@ -55,6 +55,7 @@ public class EarthbendingMain extends JPanel {
 	public EarthbendingMain() {
 		sim = new Simulation();
 		screenShake = 0;
+		pillarUpgrade = false;
 		threshold = 100;
 		punchThreshold = 6000;
 		bgTimer = 0;
@@ -71,20 +72,30 @@ public class EarthbendingMain extends JPanel {
 			public void keyPressed(KeyEvent e) {
 				switch (e.getKeyCode()) {
 				case KeyEvent.VK_W:
-//					screenShake += 14;
+					screenShake += 14;
+					pillarUpgrade = true;
 					w = true;
 					break;
 				case KeyEvent.VK_A:
-					sim.createBoulder(false, 70);
+					if (pillarUpgrade) {
+						sim.createPillar(false, 350, 70, S_WIDTH / 2 - STANDING_SPACE / 2 - 50);
+						pillarUpgrade = false;
+					} else {
+						sim.createBoulder(false, d ? 90 : 70, d ? 90 : 70, S_WIDTH / 2 - STANDING_SPACE / 2 - 50);
+					}
 					screenShake += 4;
 					a = true;
 					break;
 				case KeyEvent.VK_S:
-//					screenShake += 6;
+					screenShake += 6;
 					s = true;
 					break;
 				case KeyEvent.VK_D:
-					sim.createBoulder(true, 70);
+					if (pillarUpgrade) {
+						sim.createPillar(true, 350, 70, S_WIDTH / 2 + STANDING_SPACE / 2 + 50);
+					} else {
+						sim.createBoulder(true, a ? 90 : 70, a ? 90 : 70, S_WIDTH / 2 + STANDING_SPACE / 2 + 50);
+					}
 					screenShake += 4;
 					d = true;
 					break;
@@ -174,9 +185,9 @@ public class EarthbendingMain extends JPanel {
 				}
 			}
 			if (leftCount > punchThreshold) {
-				if(!left) {
+				if (!left) {
 					System.out.println("left");
-					if(w && s) {
+					if (w && s) {
 						sim.scatterShot(false);
 					}
 					sim.punch(false);
@@ -186,9 +197,9 @@ public class EarthbendingMain extends JPanel {
 				left = false;
 			}
 			if (rightCount > punchThreshold) {
-				if(!right) {
+				if (!right) {
 					System.out.println("\t\t\tright");
-					if(w && s) {
+					if (w && s) {
 						sim.scatterShot(true);
 					}
 					sim.punch(true);
@@ -239,7 +250,7 @@ public class EarthbendingMain extends JPanel {
 		// }
 
 		sim.simulate(gr, w, s, a, d, left, right);
-		
+
 		gr.setColor(Color.cyan);
 		gr.drawLine(S_WIDTH / 2 - STANDING_SPACE / 2, 0, S_WIDTH / 2 - STANDING_SPACE / 2, S_HEIGHT);
 		gr.drawLine(S_WIDTH / 2 + STANDING_SPACE / 2, 0, S_WIDTH / 2 + STANDING_SPACE / 2, S_HEIGHT);

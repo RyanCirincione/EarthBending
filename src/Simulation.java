@@ -37,7 +37,7 @@ public class Simulation {
 			rocks.get(i).fly();
 			
 			System.out.println(rocks.get(i).x + " " + rocks.get(i).y + " " + rocks.get(i).height + " " + rocks.get(i).isActive);
-			gr.drawImage(rockImage, (int) (rocks.get(i).x),  (int)(rocks.get(i).y), (int)(rocks.get(i).height),  (int)(rocks.get(i).width), null);
+			gr.drawImage(rockImage, (int) (rocks.get(i).x),  (int)(rocks.get(i).y),  (int)(rocks.get(i).width), (int)(rocks.get(i).height), null);
 		}
 
 	}
