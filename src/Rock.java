@@ -42,8 +42,12 @@ public class Rock {
 	}
 
 	public void fly() {
-		System.out.println(velocityX);
+		System.out.println("TEST ME BOPI"+velocityX);
 		this.x = this.x + velocityX;
+		if(type == Rock.Type.FRAGMENT)
+		{
+			y = y + velocityY;
+		}
 	}
 
 	public void decayTimer() {
