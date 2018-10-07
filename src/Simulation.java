@@ -99,4 +99,15 @@ public class Simulation {
 		}
 
 	}
+	public void createTripleBoulder(boolean side, double height,double width,double x)// 0 is left 1 is right
+	{
+		
+		int toggle = side?40:-40;
+		for(int i = 0; i < 3; i++)
+		{
+			Rock newRock = new Rock(x+(toggle*i), 440, side, Rock.Type.BOULDER, height,width);
+			rocks.add(newRock);
+		}
+		//System.out.println(rocks.size());
+	}
 }
