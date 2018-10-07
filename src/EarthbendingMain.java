@@ -97,6 +97,7 @@ public class EarthbendingMain extends JPanel {
 				case KeyEvent.VK_D:
 					if (pillarUpgrade) {
 						sim.createPillar(true, 350, 70, S_WIDTH / 2 + STANDING_SPACE / 2 + 25);
+						pillarUpgrade = false;
 					} else {
 						if(s) {
 							sim.createTripleBoulder(true, 70, 70, S_WIDTH / 2 + STANDING_SPACE / 2 + 25);

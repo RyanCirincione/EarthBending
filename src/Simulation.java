@@ -62,14 +62,11 @@ public class Simulation {
 		for (Rock temp : rocks) {
 			if (temp.side == side) {
 				if (temp.side) {
-					
-					if(temp.type == Rock.Type.FRAGMENT)
-					{
-						temp.velocityX = Math.random()*20 +50;
-						temp.velocityX = side? temp.velocityX : temp.velocityX*-1;
-					}
-					else
-					{
+
+					if (temp.type == Rock.Type.FRAGMENT) {
+						temp.velocityX = Math.random() * 20 + 50;
+						temp.velocityX = side ? temp.velocityX : temp.velocityX * -1;
+					} else {
 						temp.velocityX = 3000 / 60.0;// temp number for test reasons
 					}
 				} else {
@@ -85,7 +82,8 @@ public class Simulation {
 		for (int i = 0; i < counter; i++) {
 			if (rocks.get(i).side == side && rocks.get(i).type != Rock.Type.FRAGMENT) {
 				for (int j = 0; j < rocks.get(i).height * rocks.get(i).width / 400; j++) {
-					Rock newRock = new Rock(rocks.get(i).x, rocks.get(i).y, rocks.get(i).side, Rock.Type.FRAGMENT, rocks.get(i).height / 1.5, rocks.get(i).width / 1.5);
+					Rock newRock = new Rock(rocks.get(i).x + Math.random() * (rocks.get(i).width - 15), rocks.get(i).y + Math.random() * (rocks.get(i).width - 15),
+							rocks.get(i).side, Rock.Type.FRAGMENT, 15, 15);
 					newRock.velocityX = side ? 50 / 60.0 : -50 / 60.0;
 					newRock.velocityX = newRock.velocityX + ((Math.random() * 20) + 40) / 60;
 					newRock.velocityY = ((Math.random() * 100) - 50);
@@ -98,12 +96,13 @@ public class Simulation {
 			}
 		}
 	}
-	public void createTripleBoulder(boolean side, double height,double width,double x)// 0 is left 1 is right
+
+	public void createTripleBoulder(boolean side, double height, double width, double x)// 0 is left 1 is right
 	{
-		int toggle = side?40:-40;
-		for(int i = 0; i < 3; i++)
-		{
-			Rock newRock = new Rock(x+(toggle*i), 440, side, Rock.Type.BOULDER, height+(toggle*i),width+(toggle*i),(toggle*i));//change last value for initial velocity
+		int toggle = side ? 40 : -40;
+		for (int i = 0; i < 3; i++) {
+			Rock newRock = new Rock(x + (toggle * i), 440, side, Rock.Type.BOULDER, height + (toggle * i), width + (toggle * i), (toggle * i));// change last value for initial
+																																				// velocity
 			rocks.add(newRock);
 		}
 	}
