@@ -36,8 +36,8 @@ public class Rock {
 				this.velocityY = this.velocityY/1.3;
 			}
 			if(this.y < 210) {
-				this.velocityY += 2.3;
-				this.velocityY = this.velocityY/1.05;
+				this.velocityY += 1.8;
+//				this.velocityY = this.velocityY/1.05;
 			}
 //			if((int)this.y == 220) {
 //				System.out.println("HEY CHRIS LOOK HERE YOU DUM DUM" + this.velocityY + "THIS IS THE VELOCITY!!!!");
