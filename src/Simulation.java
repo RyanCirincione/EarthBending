@@ -10,10 +10,14 @@ public class Simulation
 		for(Rock temp : rocks)
 		{
 		
-				if(temp.type == 0 || temp.type == 1 ||temp.type == 2){
+				if(temp.type == Rock.Type.BOULDER){
 					temp.gravity();
 				}
-				if(temp.x > 1000 || temp.x < -200 ||temp.y < -200)
+				if(temp.type == Rock.Type.PILLAR)
+				{
+					temp.decayTimer();
+				}
+				if(temp.x > 1000 || temp.x < -200 ||temp.y > 480)
 				{
 					rocks.remove(temp);
 				}
@@ -21,7 +25,7 @@ public class Simulation
 		}
 	}
 	//types of rocks 0 = small boulder 1 = large boulder 
-	public void createRock(boolean side)//0 is left 1 is right
+	public void createBoulder(boolean side, int size)//0 is left 1 is right
 	{
 		for(Rock temp : rocks)
 		{
@@ -34,7 +38,17 @@ public class Simulation
 			}
 		}
 		int x = side? 420: 240;
-		Rock newRock = new Rock(x,0,side,0);
+		Rock newRock = new Rock(x,480,side,Rock.Type.BOULDER);
 		rocks.add(newRock);
+	}
+	public void createPillar(boolean side, int size)
+	{
+		int x = side? 420: 240;
+		Rock newRock = new Rock(x,480,side,Rock.Type.PILLAR);
+		rocks.add(newRock);
+	}
+	public void createFragment(boolean side, int size,int x, int y)
+	{
+		Rock newRock = new Rock(x,480,side,Rock.Type.FRAGMENT);
 	}
 }

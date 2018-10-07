@@ -7,16 +7,22 @@ public class Rock {
 	double velocityY;
 	double velocityX;
 	boolean isActive;
-	int type;
+	Type type;
+	int lifeTimer;
+	public static enum Type {
+		BOULDER,PILLAR,FRAGMENT;
+		
+	}
 	final double GRAVITY = 10/60;
-	public Rock (int sx, int sy, boolean sside, int stype)
+	public Rock (int sx, int sy, boolean sside, Type temp)
 	{
 		x = sx;
 		y = sy;
 		side = sside;//0 left 1 right
 		isActive = true; 
 		velocityY = -50/60;
-		type =stype;
+		type = temp;
+		lifeTimer = 600;
 	}
 	public void gravity ()
 	{
@@ -28,5 +34,16 @@ public class Rock {
 	public void fly ()
 	{
 		this.x = this.x + velocityX;
+	}
+	public void decayTimer()
+	{
+		if(lifeTimer>0)
+		{
+			lifeTimer--;
+		}
+		else
+		{
+			y = y +25/60;
+		}
 	}
 }
