@@ -91,6 +91,8 @@ public class Simulation {
 				{
 					Rock newRock = new Rock(temp.x,temp.y,temp.side,temp.type,temp.size);
 					newRock.velocityX = side? -50/60.0:50/60.0;
+					newRock.velocityY = (Math.random()*2-1);
+					rocks.add(newRock);
 				}
 			}
 		}
