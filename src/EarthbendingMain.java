@@ -193,8 +193,6 @@ public class EarthbendingMain extends JPanel {
 					}
 				}
 			}
-
-			sim.simulate(gr, w, s, a, d, left, right);
 		}
 		final int CARTOON_EFFECT_SCALE = 64;
 		for (int x = 0; x < pixels.length; x++) {
@@ -221,6 +219,8 @@ public class EarthbendingMain extends JPanel {
 		// }
 		// }
 		// }
+
+		sim.simulate(gr, w, s, a, d, left, right);
 		
 		gr.setColor(Color.cyan);
 		gr.drawLine(S_WIDTH / 2 - STANDING_SPACE / 2, 0, S_WIDTH / 2 - STANDING_SPACE / 2, S_HEIGHT);

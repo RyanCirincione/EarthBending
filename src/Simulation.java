@@ -2,13 +2,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-
 public class Simulation {
 	int pixels[][] = new int[640][480];
 	ArrayList<Rock> rocks = new ArrayList<Rock>();
 
-	public void simulate(Graphics gr, boolean up, boolean down, boolean left, boolean right, boolean pleft,
-			boolean pright) {
+	public void simulate(Graphics gr, boolean up, boolean down, boolean left, boolean right, boolean pleft, boolean pright) {
 		System.out.println(rocks.size());
 		for (Rock temp : rocks) {
 
@@ -24,7 +22,7 @@ public class Simulation {
 			temp.fly();
 			switch (temp.type) {
 			case BOULDER: {
-				gr.setColor(Color.getHSBColor(222,184,135));
+				gr.setColor(Color.getHSBColor(222, 184, 135));
 				break;
 			}
 			case PILLAR: {
@@ -38,7 +36,8 @@ public class Simulation {
 			default:
 				break;
 			}
-			gr.drawRect((int) temp.x, (int) temp.y, (int) temp.size, (int) temp.size);
+			System.out.println(temp.x + " " + temp.y + " " + temp.size + " " + temp.isActive);
+			gr.fillRect((int) temp.x, (int) temp.y, (int) temp.size, (int) temp.size);
 
 		}
 
@@ -55,7 +54,7 @@ public class Simulation {
 			}
 		}
 		int x = side ? 420 : 240;
-		Rock newRock = new Rock(x, 480, side, Rock.Type.BOULDER, size);
+		Rock newRock = new Rock(x, 440, side, Rock.Type.BOULDER, size);
 		rocks.add(newRock);
 	}
 
