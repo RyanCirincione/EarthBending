@@ -23,7 +23,7 @@ public class Rock {
 		y = sy;
 		side = sside;// 0 left 1 right
 		isActive = true;
-		velocityY = -100 / 60.0;
+		velocityY = -40 / 60.0;
 		type = temp;
 		lifeTimer = 600;
 		size = ssize;
@@ -32,8 +32,11 @@ public class Rock {
 	public void gravity() {
 		if (this.isActive) {
 			this.velocityY += GRAVITY - ((2.5 * this.y) - 240) / 10.0;// VALUSE WILL NEED TO CHANGE!
-			if(this.y < 180) {
-				this.velocityY = this.velocityY/2;
+			if(this.y > 225) {
+				this.velocityY = this.velocityY/1.3;
+			}
+			if(this.y < 170) {
+				this.velocityY = this.velocityY/1.45;
 			}
 		} else {
 			this.y = (this.y + GRAVITY);
