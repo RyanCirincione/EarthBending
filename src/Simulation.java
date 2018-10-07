@@ -9,11 +9,20 @@ import javax.imageio.ImageIO;
 public class Simulation {
 	int pixels[][] = new int[640][480];
 	ArrayList<Rock> rocks = new ArrayList<Rock>();
-	BufferedImage rockImage;
+	BufferedImage rockImage[];
+	BufferedImage pillarImage[];
 
 	public Simulation() {
 		try {
-			rockImage = ImageIO.read(new File("res/rock1.png"));
+			rockImage = new BufferedImage[4];
+			rockImage[0] = ImageIO.read(new File ("res/rock1.png"));
+			rockImage[1] = ImageIO.read(new File ("res/rock2.png"));
+			rockImage[2] = ImageIO.read(new File ("res/rock3.png"));
+			rockImage[3] = ImageIO.read(new File ("res/rock4.png"));
+			pillarImage = new BufferedImage[3];
+			pillarImage[0] = ImageIO.read(new File ("res/pillar1.png"));
+			pillarImage[1] = ImageIO.read(new File ("res/pillar1.png"));
+			pillarImage[2] = ImageIO.read(new File ("res/pillar1.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -34,7 +43,7 @@ public class Simulation {
 			}
 			rocks.get(i).fly();
 
-			gr.drawImage(rockImage, (int) (rocks.get(i).x), (int) (rocks.get(i).y), (int) (rocks.get(i).width), (int) (rocks.get(i).height), null);
+			gr.drawImage(rocks.get(i).image, (int) (rocks.get(i).x),  (int)(rocks.get(i).y),  (int)(rocks.get(i).width), (int)(rocks.get(i).height), null);
 		}
 	}
 
@@ -48,12 +57,12 @@ public class Simulation {
 				}
 			}
 		}
-		Rock newRock = new Rock(x, 440, side, Rock.Type.BOULDER, height, width);
+		Rock newRock = new Rock(x, 440, side, Rock.Type.BOULDER, height,width,rockImage[(int)(Math.random() * rockImage.length)]);
 		rocks.add(newRock);
 	}
 
-	public void createPillar(boolean side, double height, double width, double x) {
-		Rock newRock = new Rock(x, 480, side, Rock.Type.PILLAR, height, width);
+	public void createPillar(boolean side, double height,double width,double x) {
+		Rock newRock = new Rock(x, 480, side, Rock.Type.PILLAR, height,width,pillarImage[(int)(Math.random() * pillarImage.length)]);
 		rocks.add(newRock);
 	}
 
@@ -69,7 +78,7 @@ public class Simulation {
 						temp.velocityX = 3000 / 60.0;// temp number for test reasons
 					}
 				} else {
-					temp.velocityX = -3000 / 60.0;// temp number for test reasons
+					temp.velocityX = -(Math.random()*20)-50;// temp number for test reasons
 				}
 
 				if (temp.type == Rock.Type.PILLAR) {
@@ -86,7 +95,7 @@ public class Simulation {
 			if (rocks.get(i).side == side && rocks.get(i).type != Rock.Type.FRAGMENT) {
 				for (int j = 0; j < rocks.get(i).height * rocks.get(i).width / 400; j++) {
 					Rock newRock = new Rock(rocks.get(i).x + Math.random() * (rocks.get(i).width - 15), rocks.get(i).y + Math.random() * (rocks.get(i).width - 15),
-							rocks.get(i).side, Rock.Type.FRAGMENT, 15, 15);
+							rocks.get(i).side, Rock.Type.FRAGMENT, 15, 15, rockImage[(int)(Math.random() * rockImage.length)]);
 					newRock.velocityX = side ? 50 / 60.0 : -50 / 60.0;
 					newRock.velocityX = newRock.velocityX + ((Math.random() * 20) + 40) / 60;
 					newRock.velocityY = ((Math.random() * 100) - 50);
