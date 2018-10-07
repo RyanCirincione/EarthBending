@@ -58,15 +58,13 @@ public class Simulation {
 		System.out.println(rocks.size());
 	}
 
-	public void createPillar(boolean side, int size) {
-		int x = side ? 420 : 240;
+	public void createPillar(boolean side, double size) {
+		double x = side ? 420 : 240;
 		Rock newRock = new Rock(x, 480, side, Rock.Type.PILLAR, size);
 		rocks.add(newRock);
 	}
 
-	public void createFragment(boolean side, int size, int x, int y) {
-		Rock newRock = new Rock(x, 480, side, Rock.Type.FRAGMENT, size);
-	}
+	
 	public void punch (boolean side)//0 left 1 right
 	{
 		for (Rock temp : rocks) {
@@ -74,13 +72,30 @@ public class Simulation {
 			{
 				if(temp.side)
 				{
-					temp.velocityX = 2500/60.0;//temp number for test reasons
+					temp.velocityX = 2000/60.0;//temp number for test reasons
 				}
 				else
 				{
-					temp.velocityX = -2500/60.0;//temp number for test reasons
+					temp.velocityX = -2000/60.0;//temp number for test reasons
 				}
 			}
 		}
+	}
+	public void scatterShot(boolean side)//SIMPLE GEOMETRY
+	{
+		for(Rock temp:rocks)
+		{
+			if(temp.side == side)
+			{
+				for(int i = 0;i < temp.size/100;i++)
+				{
+					Rock newRock = new Rock(temp.x,temp.y,temp.side,temp.type,temp.size);
+					newRock.velocityX = side? -50/60.0:50/60.0;
+					newRock.velocityY = (Math.random()*2-1);
+					rocks.add(newRock);
+				}
+			}
+		}
+		
 	}
 }

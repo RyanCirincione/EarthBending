@@ -71,7 +71,7 @@ public class EarthbendingMain extends JPanel {
 			public void keyPressed(KeyEvent e) {
 				switch (e.getKeyCode()) {
 				case KeyEvent.VK_W:
-					screenShake += 14;
+//					screenShake += 14;
 					w = true;
 					break;
 				case KeyEvent.VK_A:
@@ -80,7 +80,7 @@ public class EarthbendingMain extends JPanel {
 					a = true;
 					break;
 				case KeyEvent.VK_S:
-					screenShake += 6;
+//					screenShake += 6;
 					s = true;
 					break;
 				case KeyEvent.VK_D:
@@ -175,10 +175,16 @@ public class EarthbendingMain extends JPanel {
 			}
 			if (leftCount > punchThreshold) {
 				System.out.println("left");
+				if(w && s) {
+					sim.scatterShot(false);
+				}
 				sim.punch(false);
 			}
 			if (rightCount > punchThreshold) {
 				System.out.println("\t\t\tright");
+				if(w && s) {
+					sim.scatterShot(true);
+				}
 				sim.punch(true);
 			}
 
