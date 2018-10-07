@@ -17,12 +17,12 @@ public class Simulation {
 			rockImage = new BufferedImage[4];
 			rockImage[0] = ImageIO.read(new File ("res/rock1.png"));
 			rockImage[1] = ImageIO.read(new File ("res/rock2.png"));
-			rockImage[2] = ImageIO.read(new File ("res/rock3.png"));
-			rockImage[3] = ImageIO.read(new File ("res/rock4.png"));
+			rockImage[2] = ImageIO.read(new File ("res/rock4.png"));
+			rockImage[3] = ImageIO.read(new File ("res/rock5.png"));
 			pillarImage = new BufferedImage[3];
 			pillarImage[0] = ImageIO.read(new File ("res/pillar1.png"));
-			pillarImage[1] = ImageIO.read(new File ("res/pillar1.png"));
-			pillarImage[2] = ImageIO.read(new File ("res/pillar1.png"));
+			pillarImage[1] = ImageIO.read(new File ("res/pillar2.png"));
+			pillarImage[2] = ImageIO.read(new File ("res/pillar3.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
