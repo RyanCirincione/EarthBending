@@ -16,7 +16,7 @@ public class Simulation {
 			if (temp.type == Rock.Type.PILLAR) {
 				temp.decayTimer();
 			}
-			if (temp.x > 1000 || temp.x < -200 || temp.y > 480) {
+			if (temp.x > 800 || temp.x < -200 || temp.y > 480) {
 				rocks.remove(temp);
 			}
 			temp.fly();
@@ -66,5 +66,21 @@ public class Simulation {
 
 	public void createFragment(boolean side, int size, int x, int y) {
 		Rock newRock = new Rock(x, 480, side, Rock.Type.FRAGMENT, size);
+	}
+	public void punch (boolean side)//0 left 1 right
+	{
+		for (Rock temp : rocks) {
+			if(temp.side == side)
+			{
+				if(temp.side)
+				{
+					temp.velocityX = 100/60.0;//temp number for test reasons
+				}
+				else
+				{
+					temp.velocityX = -1000/60.0;//temp number for test reasons
+				}
+			}
+		}
 	}
 }
