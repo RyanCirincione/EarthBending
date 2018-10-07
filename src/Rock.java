@@ -32,11 +32,11 @@ public class Rock {
 	public void gravity() {
 		if (this.isActive) {
 			this.velocityY -= (1.3 * ((this.y) - 240)) / 10.0;// VALUSE WILL NEED TO CHANGE!
-			if(this.y > 270) {
+			if(this.y > 255) {
 				this.velocityY = this.velocityY/1.3;
 			}
-			if(this.y < 210) {
-				this.velocityY = this.velocityY/1.15;
+			if(this.y < 225) {
+				this.velocityY = this.velocityY/1.1;
 			}
 		} else {
 			this.y = (this.y + GRAVITY);
