@@ -45,7 +45,7 @@ public class EarthbendingMain extends JPanel {
 
 	private static final long serialVersionUID = 4486604239167882738L;
 	static final int STANDING_SPACE = 250, S_WIDTH = 640, S_HEIGHT = 480;
-	boolean w, a, s, d, left, right, pillarUpgrade;
+	boolean w, a, s, d, left, right, pillarUpgrade, whiteDebug;
 	Simulation sim;
 	BufferedImage background;
 	FrameGrabber grabber;
@@ -57,6 +57,7 @@ public class EarthbendingMain extends JPanel {
 		sim = new Simulation();
 		screenShake = 0;
 		pillarUpgrade = false;
+		whiteDebug = false;
 		threshold = 100;
 		punchThreshold = 8000;
 		bgTimer = 0;
@@ -134,6 +135,9 @@ public class EarthbendingMain extends JPanel {
 					break;
 				case KeyEvent.VK_DOWN:
 					punchThreshold -= 100;
+					break;
+				case KeyEvent.VK_CONTROL:
+					whiteDebug = !whiteDebug;
 					break;
 				case KeyEvent.VK_SPACE:
 					try {
@@ -272,7 +276,7 @@ public class EarthbendingMain extends JPanel {
 						(b / CARTOON_EFFECT_SCALE) * CARTOON_EFFECT_SCALE + 24));
 				g.fillRect(x, y, 1, 1);
 
-				if (pixels[x][y]) {
+				if (pixels[x][y] && whiteDebug) {
 					g.setColor(Color.white);
 					g.fillRect(x, y, 1, 1);
 				}
