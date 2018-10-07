@@ -53,7 +53,7 @@ public class Rock {
 	{
 		if(y > (480-height))
 		{
-			y += velocityY;
+			y += -600/60;
 		}
 	}
 	public void fly() {
