@@ -72,7 +72,7 @@ public class EarthbendingMain extends JPanel {
 			public void keyPressed(KeyEvent e) {
 				switch (e.getKeyCode()) {
 				case KeyEvent.VK_W:
-				//	screenShake += 14;
+					// screenShake += 14;
 					pillarUpgrade = true;
 					w = true;
 					break;
