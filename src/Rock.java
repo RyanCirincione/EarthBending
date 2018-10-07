@@ -23,7 +23,7 @@ public class Rock {
 		y = sy;
 		side = sside;// 0 left 1 right
 		isActive = true;
-		velocityY = -500.0 / 60.0;
+		velocityY = -100.0 / 60.0;
 		type = temp;
 		lifeTimer = 600;
 		size = ssize;
@@ -35,9 +35,13 @@ public class Rock {
 			if(this.y > 255) {
 				this.velocityY = this.velocityY/1.3;
 			}
-			if(this.y < 225) {
-				this.velocityY = this.velocityY/1.1;
+			if(this.y < 210) {
+				this.velocityY += 2.3;
+				this.velocityY = this.velocityY/1.15;
 			}
+//			if((int)this.y == 220) {
+//				System.out.println("HEY CHRIS LOOK HERE YOU DUM DUM" + this.velocityY + "THIS IS THE VELOCITY!!!!");
+//			}
 		} else {
 			this.y = (this.y + GRAVITY);
 		}
