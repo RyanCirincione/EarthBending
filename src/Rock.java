@@ -33,17 +33,21 @@ public class Rock {
 
 	public void gravity() {
 		if (this.isActive) {
-			this.velocityY -= (1.3 * ((this.y) - 240)) / 10.0;// VALUSE WILL NEED TO CHANGE!
-			if(this.y > 255) {
-				this.velocityY = this.velocityY/1.3;
+			this.velocityY -= (1.8 * ((this.y) - 240)) / 10.0;// VALUSE WILL NEED TO CHANGE!
+			if((int)this.y< 222 && (int)this.velocityY<0) {
+				if((int)this.velocityY < -1) {
+					this.velocityY = -2;
+				}
+				this.velocityY += 0.1;
+				this.velocityY = this.velocityY/1.05;
 			}
-			if(this.y < 210) {
-				this.velocityY += 1.8;
-//				this.velocityY = this.velocityY/1.05;
+			if(248 < (int)this.y && (int)this.velocityY > 0) {
+				if((int)this.velocityY > 1) {
+					this.velocityY = 2;
+				}
+				this.velocityY -= 0.1;
+				this.velocityY = this.velocityY/1.05;
 			}
-//			if((int)this.y == 220) {
-//				System.out.println("HEY CHRIS LOOK HERE YOU DUM DUM" + this.velocityY + "THIS IS THE VELOCITY!!!!");
-//			}
 		} else {
 			this.y = (this.y + GRAVITY);
 		}
