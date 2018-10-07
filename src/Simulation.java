@@ -100,11 +100,23 @@ public class Simulation {
 	}
 	public void createTripleBoulder(boolean side, double height,double width,double x)// 0 is left 1 is right
 	{
-		int toggle = side?40:-40;
+		ArrayList<Rock> flip = new ArrayList<Rock>();
+		int toggle = side?40:-60;
 		for(int i = 0; i < 3; i++)
 		{
-			Rock newRock = new Rock(x+(toggle*i), 440, side, Rock.Type.BOULDER, height+(toggle*i),width+(toggle*i),(toggle*i));//change last value for initial velocity
-			rocks.add(newRock);
+			Rock newRock = new Rock(x+(toggle*i), 440, side, Rock.Type.BOULDER, height+(40*i),width+(40*i),(40*i));//change last value for initial velocity
+			flip.add(newRock);
+		}
+		for(int i = 0; i < flip.size(); i++)
+		{
+			if(side)
+			{
+				rocks.add(flip.get(i));
+			}
+			else
+			{
+				rocks.add(flip.get(flip.size()-i-1));
+			}
 		}
 	}
 }
