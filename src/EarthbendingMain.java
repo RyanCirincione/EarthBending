@@ -4,6 +4,7 @@ import static org.bytedeco.javacpp.opencv_core.cvFlip;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -75,6 +76,9 @@ public class EarthbendingMain extends JPanel {
 					screenShake += 14;
 					pillarUpgrade = true;
 					w = true;
+					for (int i = 0; i < S_WIDTH; i += 20) {
+						sim.dusts.add(new Dust(i + Math.random() * 20, S_HEIGHT - 100 + Math.random() * 20, 0.35f));
+					}
 					break;
 				case KeyEvent.VK_A:
 					if (pillarUpgrade) {
@@ -97,6 +101,9 @@ public class EarthbendingMain extends JPanel {
 				case KeyEvent.VK_S:
 					screenShake += 6;
 					s = true;
+					for (int i = 0; i < S_WIDTH; i += 40) {
+						sim.dusts.add(new Dust(i + Math.random() * 20, S_HEIGHT - 100 + Math.random() * 20, 0.35f));
+					}
 					break;
 				case KeyEvent.VK_D:
 					if (pillarUpgrade) {
@@ -155,6 +162,7 @@ public class EarthbendingMain extends JPanel {
 	}
 
 	public void paintComponent(Graphics gr) {
+		Graphics2D g = (Graphics2D) gr;
 		int ssX = (int) (Math.random() * screenShake * 2) - screenShake, ssY = (int) (Math.random() * screenShake * 2) - screenShake;
 		if (screenShake > 0) {
 			if (screenShake > 30) {
@@ -162,9 +170,9 @@ public class EarthbendingMain extends JPanel {
 			}
 			screenShake -= 2;
 		}
-		gr.setColor(Color.lightGray);
-		gr.fillRect(0, 0, S_WIDTH, S_HEIGHT);
-		gr.translate(ssX, ssY);
+		g.setColor(Color.lightGray);
+		g.fillRect(0, 0, S_WIDTH, S_HEIGHT);
+		g.translate(ssX, ssY);
 		BufferedImage image = null;
 		try {
 			Frame frame = grabber.grab();
@@ -183,7 +191,7 @@ public class EarthbendingMain extends JPanel {
 			e.printStackTrace();
 		}
 
-		gr.drawImage(image, 0, 0, null);
+		g.drawImage(image, 0, 0, null);
 
 		int leftCount = 0, rightCount = 0;
 		boolean[][] pixels = new boolean[640][480], pixels2 = new boolean[640][480];
@@ -245,40 +253,40 @@ public class EarthbendingMain extends JPanel {
 		for (int x = 0; x < pixels.length; x++) {
 			for (int y = 0; y < pixels[x].length; y++) {
 				int rgb = image.getRGB(x, y);
-				int r = (rgb >> 16) & 0xFF, g = (rgb >> 8) & 0xFF, b = rgb & 0xFF;
-				gr.setColor(new Color((r / CARTOON_EFFECT_SCALE) * CARTOON_EFFECT_SCALE + 24, (g / CARTOON_EFFECT_SCALE) * CARTOON_EFFECT_SCALE + 24,
+				int r = (rgb >> 16) & 0xFF, gre = (rgb >> 8) & 0xFF, b = rgb & 0xFF;
+				g.setColor(new Color((r / CARTOON_EFFECT_SCALE) * CARTOON_EFFECT_SCALE + 24, (gre / CARTOON_EFFECT_SCALE) * CARTOON_EFFECT_SCALE + 24,
 						(b / CARTOON_EFFECT_SCALE) * CARTOON_EFFECT_SCALE + 24));
-				gr.fillRect(x, y, 1, 1);
+				g.fillRect(x, y, 1, 1);
 
 				if (pixels[x][y]) {
-					gr.setColor(Color.white);
-					gr.fillRect(x, y, 1, 1);
+					g.setColor(Color.white);
+					g.fillRect(x, y, 1, 1);
 				}
 			}
 		}
 
-		// gr.drawImage(image, 641, 0, null);
-		// gr.setColor(Color.white);
+		// g.drawImage(image, 641, 0, null);
+		// g.setColor(Color.white);
 		// for (int x = 0; x < pixels.length; x++) {
 		// for (int y = 0; y < pixels[x].length; y++) {
 		// if (pixels2[x][y]) {
-		// gr.fillRect(641 + x, y, 1, 1);
+		// g.fillRect(641 + x, y, 1, 1);
 		// }
 		// }
 		// }
 
-		sim.simulate(gr, w, s, a, d, left, right);
+		sim.simulate(g, w, s, a, d, left, right);
 
-		gr.setColor(Color.cyan);
-		gr.drawLine(S_WIDTH / 2 - STANDING_SPACE / 2, 0, S_WIDTH / 2 - STANDING_SPACE / 2, S_HEIGHT);
-		gr.drawLine(S_WIDTH / 2 + STANDING_SPACE / 2, 0, S_WIDTH / 2 + STANDING_SPACE / 2, S_HEIGHT);
-		gr.translate(-ssX, -ssY);
+		g.setColor(Color.cyan);
+		g.drawLine(S_WIDTH / 2 - STANDING_SPACE / 2, 0, S_WIDTH / 2 - STANDING_SPACE / 2, S_HEIGHT);
+		g.drawLine(S_WIDTH / 2 + STANDING_SPACE / 2, 0, S_WIDTH / 2 + STANDING_SPACE / 2, S_HEIGHT);
+		g.translate(-ssX, -ssY);
 
-		gr.setColor(Color.white);
-		gr.fillRect(0, 485, 140, 20);
-		gr.setColor(Color.blue);
-		gr.drawString("" + threshold, 2, 500);
-		gr.drawString("" + punchThreshold, 82, 500);
+		g.setColor(Color.white);
+		g.fillRect(0, 485, 140, 20);
+		g.setColor(Color.blue);
+		g.drawString("" + threshold, 2, 500);
+		g.drawString("" + punchThreshold, 82, 500);
 	}
 
 	public static BufferedImage deepCopy(BufferedImage bi) {

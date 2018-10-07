@@ -1,14 +1,18 @@
-import java.awt.Graphics;
+import java.awt.AlphaComposite;
+import java.awt.Composite;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 
 public class Simulation {
 	int pixels[][] = new int[640][480];
 	ArrayList<Rock> rocks = new ArrayList<Rock>();
+	ArrayList<Dust> dusts = new ArrayList<Dust>();
 	BufferedImage rockImage[];
 	BufferedImage pillarImage[];
 
@@ -28,7 +32,21 @@ public class Simulation {
 		}
 	}
 
-	public void simulate(Graphics gr, boolean up, boolean down, boolean left, boolean right, boolean pleft, boolean pright) {
+	public void simulate(Graphics2D g, boolean up, boolean down, boolean left, boolean right, boolean pleft, boolean pright) {
+		Iterator<Dust> iter = dusts.iterator();
+		Composite old = g.getComposite();
+		while (iter.hasNext()) {
+			Dust d = iter.next();
+			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, d.opacity));
+
+			g.drawImage(d.dust, (int) (d.x), (int) (d.y), 70, 70, null);
+			d.opacity -= 0.027f;
+			if(d.opacity <= 0) {
+				iter.remove();
+			}
+		}
+		g.setComposite(old);
+
 		for (int i = 0; i < rocks.size(); i++) {
 			if (rocks.get(i).type == Rock.Type.BOULDER) {
 				rocks.get(i).gravity();
@@ -42,8 +60,11 @@ public class Simulation {
 				continue;
 			}
 			rocks.get(i).fly();
+			if(rocks.get(i).type == Rock.Type.PILLAR && rocks.get(i).velocityX > 0.1) {
+				dusts.add(new Dust(rocks.get(i).x - 30 + Math.random() * 30, EarthbendingMain.S_HEIGHT - 90 + Math.random() * 30, 0.6f));
+			}
 
-			gr.drawImage(rocks.get(i).image, (int) (rocks.get(i).x), (int) (rocks.get(i).y), (int) (rocks.get(i).width), (int) (rocks.get(i).height), null);
+			g.drawImage(rocks.get(i).image, (int) (rocks.get(i).x), (int) (rocks.get(i).y), (int) (rocks.get(i).width), (int) (rocks.get(i).height), null);
 		}
 	}
 
@@ -58,6 +79,9 @@ public class Simulation {
 			}
 		}
 		Rock newRock = new Rock(x, 440, side, Rock.Type.BOULDER, height, width, rockImage[(int) (Math.random() * rockImage.length)]);
+		dusts.add(new Dust(x - 30 + Math.random() * 60, 410 + Math.random() * 60, 0.4f));
+		dusts.add(new Dust(x - 30 + Math.random() * 60, 410 + Math.random() * 60, 0.4f));
+		dusts.add(new Dust(x - 30 + Math.random() * 60, 410 + Math.random() * 60, 0.4f));
 		rocks.add(newRock);
 	}
 
@@ -102,6 +126,9 @@ public class Simulation {
 
 					rocks.add(newRock);
 				}
+				for(int j = 0; j < 10; j++) {
+					dusts.add(new Dust(rocks.get(i).x - 50 + Math.random()*100, rocks.get(i).y - 50 + Math.random()*100, 0.85f));
+				}
 				rocks.remove(rocks.get(i));
 				i--;
 				counter--;
@@ -132,7 +159,8 @@ public class Simulation {
 		ArrayList<Rock> flip = new ArrayList<Rock>();
 		int toggle = side ? 40 : -60;
 		for (int i = 0; i < 3; i++) {
-			Rock newRock = new Rock(x + (toggle * i), 440, side, Rock.Type.PILLAR, height + (40 * i), width + (40 * i), (40 * i), pillarImage[(int)(Math.random() * pillarImage.length)]);// change last value for initial velocity
+			Rock newRock = new Rock(x + (toggle * i), 440, side, Rock.Type.PILLAR, height + (40 * i), width + (40 * i), (40 * i),
+					pillarImage[(int) (Math.random() * pillarImage.length)]);// change last value for initial velocity
 			flip.add(newRock);
 		}
 		for (int i = 0; i < flip.size(); i++) {
