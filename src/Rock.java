@@ -55,7 +55,6 @@ public class Rock {
 		{
 			y += velocityY;
 		}
-		y = velocityY;
 	}
 	public void fly() {
 		System.out.println("TEST ME BOPI"+velocityX);
@@ -69,6 +68,7 @@ public class Rock {
 	public void decayTimer() {
 		if (lifeTimer > 0) {
 			lifeTimer--;
+			this.grow();
 		} else {
 			y = y + 25 / 60.0;
 		}
