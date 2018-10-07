@@ -44,7 +44,7 @@ public class EarthbendingMain extends JPanel {
 	}
 
 	private static final long serialVersionUID = 4486604239167882738L;
-	static final int STANDING_SPACE = 250, S_WIDTH = 640, S_HEIGHT = 510;
+	static final int STANDING_SPACE = 250, S_WIDTH = 640, S_HEIGHT = 480;
 	boolean w, a, s, d, left, right, pillarUpgrade;
 	Simulation sim;
 	BufferedImage background;
@@ -76,8 +76,8 @@ public class EarthbendingMain extends JPanel {
 					screenShake += 14;
 					pillarUpgrade = true;
 					w = true;
-					for (int i = 0; i < S_WIDTH; i += 20) {
-						sim.dusts.add(new Dust(i + Math.random() * 20, S_HEIGHT - 100 + Math.random() * 20, 0.35f));
+					for (int i = 80; i < S_WIDTH-140; i += 20) {
+						sim.dusts.add(new Dust(i + Math.random() * 20, S_HEIGHT - 80 + Math.random() * 20, 0.35f));
 					}
 					break;
 				case KeyEvent.VK_A:
@@ -101,8 +101,8 @@ public class EarthbendingMain extends JPanel {
 				case KeyEvent.VK_S:
 					screenShake += 6;
 					s = true;
-					for (int i = 0; i < S_WIDTH; i += 40) {
-						sim.dusts.add(new Dust(i + Math.random() * 20, S_HEIGHT - 100 + Math.random() * 20, 0.35f));
+					for (int i = 80; i < S_WIDTH-140; i += 40) {
+						sim.dusts.add(new Dust(i + Math.random() * 20, S_HEIGHT - 80 + Math.random() * 20, 0.35f));
 					}
 					break;
 				case KeyEvent.VK_D:
