@@ -75,7 +75,7 @@ public class EarthbendingMain extends JPanel {
 					w = true;
 					break;
 				case KeyEvent.VK_A:
-					sim.createBoulder(false, 50);
+					sim.createBoulder(false, 70);
 					screenShake += 4;
 					a = true;
 					break;
@@ -84,7 +84,7 @@ public class EarthbendingMain extends JPanel {
 					s = true;
 					break;
 				case KeyEvent.VK_D:
-					sim.createBoulder(true, 50);
+					sim.createBoulder(true, 70);
 					screenShake += 4;
 					d = true;
 					break;
