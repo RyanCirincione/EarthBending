@@ -39,14 +39,14 @@ public class Rock {
 					this.velocityY = -2;
 				}
 				this.velocityY += 0.1;
-				this.velocityY = this.velocityY/1.03;
+				this.velocityY = this.velocityY/1.05;
 			}
 			if(248 < (int)this.y && (int)this.velocityY > 0) {
 				if((int)this.velocityY > 1) {
 					this.velocityY = 2;
 				}
 				this.velocityY -= 0.1;
-				this.velocityY = this.velocityY/1.03;
+				this.velocityY = this.velocityY/1.05;
 			}
 		} else {
 			this.y = (this.y + GRAVITY);
