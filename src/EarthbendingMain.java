@@ -45,7 +45,8 @@ public class EarthbendingMain extends JPanel {
 
 	private static final long serialVersionUID = 4486604239167882738L;
 	static final int STANDING_SPACE = 250, S_WIDTH = 640, S_HEIGHT = 480;
-	boolean w, a, s, d, left, right, pillarUpgrade, whiteDebug;
+	boolean w, a, s, d, left, right, whiteDebug;
+	int pillarUpgrade = 0;
 	Simulation sim;
 	BufferedImage background;
 	FrameGrabber grabber;
@@ -56,7 +57,7 @@ public class EarthbendingMain extends JPanel {
 	public EarthbendingMain() {
 		sim = new Simulation();
 		screenShake = 0;
-		pillarUpgrade = false;
+		pillarUpgrade = 0;
 		whiteDebug = false;
 		threshold = 100;
 		punchThreshold = 8000;
@@ -75,20 +76,20 @@ public class EarthbendingMain extends JPanel {
 				switch (e.getKeyCode()) {
 				case KeyEvent.VK_W:
 					screenShake += 14;
-					pillarUpgrade = true;
+					pillarUpgrade = 100;
 					w = true;
 					for (int i = 80; i < S_WIDTH-140; i += 20) {
 						sim.dusts.add(new Dust(i + Math.random() * 20, S_HEIGHT - 80 + Math.random() * 20, 0.35f));
 					}
 					break;
 				case KeyEvent.VK_A:
-					if (pillarUpgrade) {
+					if (pillarUpgrade > 0) {
 						if (s) {
 							sim.createTriplePillar(false, 200, 80, S_WIDTH / 2 - STANDING_SPACE / 2 - 85);
 						} else {
 							sim.createPillar(false, 200, 80, S_WIDTH / 2 - STANDING_SPACE / 2 - 85);
 						}
-						pillarUpgrade = false;
+						pillarUpgrade = 0;
 					} else {
 						if (s) {
 							sim.createTripleBoulder(false, 70, 70, S_WIDTH / 2 - STANDING_SPACE / 2 - 85);
@@ -107,13 +108,13 @@ public class EarthbendingMain extends JPanel {
 					}
 					break;
 				case KeyEvent.VK_D:
-					if (pillarUpgrade) {
+					if (pillarUpgrade > 0) {
 						if (s) {
 							sim.createTriplePillar(true, 200, 80, S_WIDTH / 2 + STANDING_SPACE / 2 + 25);
 						} else {
 							sim.createPillar(true, 200, 80, S_WIDTH / 2 + STANDING_SPACE / 2 + 25);
 						}
-						pillarUpgrade = false;
+						pillarUpgrade = 0;
 					} else {
 						if (s) {
 							sim.createTripleBoulder(true, 70, 70, S_WIDTH / 2 + STANDING_SPACE / 2 + 25);
@@ -181,6 +182,9 @@ public class EarthbendingMain extends JPanel {
 
 	public void paintComponent(Graphics gr) {
 		Graphics2D g = (Graphics2D) gr;
+		if(pillarUpgrade > 0) {
+			pillarUpgrade--;
+		}
 		int ssX = (int) (Math.random() * screenShake * 2) - screenShake, ssY = (int) (Math.random() * screenShake * 2) - screenShake;
 		if (screenShake > 0) {
 			if (screenShake > 30) {
